@@ -8,7 +8,7 @@
 #
 # featured image is used in home page banner and in meta markup to represent the collection
 # use either an objectid (from an item in this collect), a relative location of an image in this repo (ex. /assets/img/feature.jpg), or a full url to an image elsewhere
-featured-image: demo_001
+featured-image: histhea0002
 # optional: add extra padding around collection title for a larger image feature. 
 home-title-y-padding: # Default is 8em
 # optional: change position of background image, center, top, bottom
@@ -65,6 +65,9 @@ metadata-facets-fields: "subject,creator,format"
 ##########
 # ADVANCED OPTIONS
 #
+
+# DEFAULT SITE LANGUAGE
+
 
 # NAVBAR COLORS
 # If you'd like to change the color of the nav-bar and links, adjust the below. 
