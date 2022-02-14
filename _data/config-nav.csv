@@ -1,9 +1,9 @@
-display_name,stub,dropdown_parent
-Home,/
-Browse,/browse.html
-Subjects,/subjects.html
-Locations,/locations.html
-Map,/map.html
-Timeline,/timeline.html
-Data,/data.html
-About,/about.html
+display_name,spanish_name,stub,dropdown_parent
+Home,Casa,/
+Browse,Navegar,/browse.html
+Subjects,Sujetos,/subjects.html
+Locations,Ubicaciones,/locations.html
+Map,Mapa,/map.html
+Timeline,Cronología,/timeline.html
+Data,Datos,/data.html
+About,Acerca de,/about.html
