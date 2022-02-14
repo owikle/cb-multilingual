@@ -10,6 +10,17 @@ custom-foot: js/item-js.html
         <li id="bc-title" class="breadcrumb-item active"></li>
     </ul>
 
+    <div class="text-right">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off" checked><span id="english" class="current language_button">English</span> 
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option2" autocomplete="off"><span id="spanish" class="language_button">Spanish</span> 
+            </label>
+        </div>
+    </div>
+
     <h2 id="item-title"></h2>
 
     <div id="loading" class="text-center">
@@ -49,3 +60,14 @@ custom-foot: js/item-js.html
     </div>
     {% endif %}
 </div>
+
+<script>
+    function changeLang() {
+        var hiddenElements = document.querySelectorAll('.spanish');
+        for (var i = 0; i < hiddenElements.length; i++){
+            hiddenElements[i].style.display = 'none';
+        }
+    }
+    var enBtn = document.getElementById('english');
+    enBtn.addEventListener("click", changeLang);
+</script>
