@@ -17,8 +17,8 @@
         /* add item title */
         var objectTitleEn = record.title_en;
         var objectTitleEs = record.title_es;
-        document.getElementById("bc-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish">' + objectTitleEs + '</span>';
-        document.getElementById("item-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish">' + objectTitleEs + '</span>';
+        document.getElementById("bc-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish" style="display: none;">' + objectTitleEs + '</span>';
+        document.getElementById("item-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish" style="display: none;">' + objectTitleEs + '</span>';
         /* add object */ 
         var format = "" + record.format;
         var objectLink = record.filename;
