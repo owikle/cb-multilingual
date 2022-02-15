@@ -9,8 +9,11 @@
                 {%- assign navItems = site.data.config-nav | where_exp: 'item', 'item.dropdown_parent == nil' -%} 
                 {% for nav in navItems %}
                 {% if nav.stub %}
-                <li class="nav-item {% if page.url == nav.stub %}active{% endif %}">
+                <li class="nav-item english {% if page.url == nav.stub %}active{% endif %}">
                     <a class="nav-link " href="{{ nav.stub | relative_url }}">{{ nav.display_name }}</a>
+                </li>
+                <li class="nav-item spanish display-none {% if page.url == nav.stub %}active{% endif %}">
+                    <a class="nav-link " href="{{ nav.stub | relative_url }}">{{ nav.spanish_name }}</a>
                 </li>
                 {%- else -%}
                 <li class="nav-item dropdown">
