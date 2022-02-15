@@ -60,31 +60,3 @@ custom-foot: js/item-js.html
     </div>
     {% endif %}
 </div>
-
-<script>
-    function enLang() {
-        var visibleElements = document.querySelectorAll('.english');
-        var hiddenElements = document.querySelectorAll('.spanish');
-        for (var i = 0; i < visibleElements.length; i++){
-            visibleElements[i].style.display = '';
-        }
-        for (var i = 0; i < hiddenElements.length; i++){
-            hiddenElements[i].style.display = 'none';
-        }
-    }
-    function esLang() {
-        var visibleElements = document.querySelectorAll('.spanish');
-        var hiddenElements = document.querySelectorAll('.english');
-        for (var i = 0; i < visibleElements.length; i++){
-            visibleElements[i].style.display = '';
-        }
-        for (var i = 0; i < hiddenElements.length; i++){
-            hiddenElements[i].style.display = 'none';
-        }
-    }
-    var enBtn = document.getElementById('english');
-    enBtn.addEventListener("click", enLang);
-
-    var esBtn = document.getElementById('spanish');
-    esBtn.addEventListener("click", esLang);
-</script>

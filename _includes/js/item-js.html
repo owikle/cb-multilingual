@@ -90,10 +90,10 @@
                     browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
                 }
             }
-            fields += '<dt class="field">{{ f.display_name }}:</dt> <dd class="field-value">' + browseLinks + '</dd>';
+            fields += '<dt class="field{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}">' + browseLinks + '</dd>';
         }
         {%- else -%}
-        if (record[{{ f.field | jsonify }}]) { fields += '<dt class="field">{{ f.display_name }}:</dt> <dd class="field-value">{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd>'; }
+        if (record[{{ f.field | jsonify }}]) { fields += '<dt class="field{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}>{{ f.display_name }}:</dt> <dd class="field-value{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}>{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd>'; }
         {% endif %}{% endfor %}
         fields += '</dl>';
         document.getElementById("item-metadata").innerHTML = fields;
@@ -146,5 +146,31 @@
     document.getElementById("loading").style.display = "none";
 
 })();
+
+function enLang() {
+    var visibleElements = document.getElementsByClassName('english');
+    var hiddenElements = document.getElementsByClassName('spanish');
+    for (var i = 0; i < visibleElements.length; i++){
+        visibleElements[i].style.display = '';
+    }
+    for (var i = 0; i < hiddenElements.length; i++){
+        hiddenElements[i].style.display = 'none';
+    }
+}
+function esLang() {
+    var visibleElements = document.getElementsByClassName('spanish');
+    var hiddenElements = document.getElementsByClassName('english');
+    for (var i = 0; i < visibleElements.length; i++){
+        visibleElements[i].style.display = '';
+    }
+    for (var i = 0; i < hiddenElements.length; i++){
+        hiddenElements[i].style.display = 'none';
+    }
+}
+var enBtn = document.getElementById('english');
+enBtn.addEventListener("click", enLang);
+
+var esBtn = document.getElementById('spanish');
+esBtn.addEventListener("click", esLang);
 
 </script>
