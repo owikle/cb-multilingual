@@ -90,10 +90,10 @@
                     browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
                 }
             }
-            fields += '<dt class="field{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}">' + browseLinks + '</dd>';
+            fields += '<dt class="field {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish{% endif %}">' + browseLinks + '</dd>';
         }
         {%- else -%}
-        if (record[{{ f.field | jsonify }}]) { fields += '<dt class="field{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}>{{ f.display_name }}:</dt> <dd class="field-value{% if f.field contains "-eng" %} english"{% elsif f.field contains "-es" %} spanish"{% else %}"{% endif %}>{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd>'; }
+        if (record[{{ f.field | jsonify }}]) { fields += '<dt class="field {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish{% endif %}">{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd>'; }
         {% endif %}{% endfor %}
         fields += '</dl>';
         document.getElementById("item-metadata").innerHTML = fields;
