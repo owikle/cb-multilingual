@@ -147,26 +147,29 @@
 
 })();
 
+// switch out display-none classes based on selected language
+function changeLang(visible, hidden){
+    for (var i = 0; i < visible.length; i++){
+        visible[i].classList.remove('display-none');
+    }
+    for (var i = 0; i < hidden.length; i++){
+        hidden[i].classList.add('display-none');
+    }
+}
+
+// set selected language to visible
 function enLang() {
     var visibleElements = document.getElementsByClassName('english');
     var hiddenElements = document.getElementsByClassName('spanish');
-    for (var i = 0; i < visibleElements.length; i++){
-        visibleElements[i].classList.remove('display-none');
-    }
-    for (var i = 0; i < hiddenElements.length; i++){
-        hiddenElements[i].classList.add('display-none');
-    }
+    changeLang(visibleElements, hiddenElements);
 }
 function esLang() {
     var visibleElements = document.getElementsByClassName('spanish');
     var hiddenElements = document.getElementsByClassName('english');
-    for (var i = 0; i < visibleElements.length; i++){
-        visibleElements[i].classList.remove('display-none');
-    }
-    for (var i = 0; i < hiddenElements.length; i++){
-        hiddenElements[i].classList.add('display-none');
-    }
+    changeLang(visibleElements, hiddenElements);
 }
+
+// button selects language
 var enBtn = document.getElementById('english');
 enBtn.addEventListener("click", enLang);
 
