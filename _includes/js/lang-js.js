@@ -8,9 +8,10 @@ if (localStorage.getItem("lang")) {
     site_language = "eng";
     // set value in local store
     localStorage.setItem("lang","eng");
-    // set default button to checked
-    document.querySelector("#" + site_language).checked = true;
 }
+
+// set button to checked
+document.querySelector("#" + site_language).checked = true;
 
 // show the default language
 $("." + site_language).show();
