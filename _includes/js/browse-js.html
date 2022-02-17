@@ -42,7 +42,7 @@ function makeCard(obj) {
     var btns = obj[{{ f.field | jsonify }}].split(";");
     for (var i = 0, len = btns.length; i < len; i++) {
       if(btns[i] != "") {
-        card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+        card += '<span class="{% if f.field contains "-eng" %}eng{% elsif f.field contains "-es" %}spa{% endif %}"><a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a></span>';
       }
     }
     {% else %}
@@ -68,7 +68,7 @@ function makeCard(obj) {
       card += '"></span></a></small></p>';
     }
     // view button
-    card += '<hr><a href="' + itemHref + '" class="btn btn-sm btn-light" title="link to ' + obj.title + '">View Full Record</a>';
+    card += '<hr><a href="' + itemHref + '" class="btn btn-sm btn-light" title="link to ' + obj.title + '"><span class="eng">View Full Record</span><span class="spa">Ver Registro Completo</span></a>';
     // close divs
     card += '</div></div></div>';
     // send back big string
@@ -128,7 +128,7 @@ function makeCard(obj) {
       }
     }
     // add number 
-    $("#numberOf").html(filteredItems.length + " of {{ items | size }} items");
+    $("#numberOf").html(filteredItems.length + " <span class='eng'>of {{ items | size }} items</span><span class='spa'>de {{ items | size }} elementos</span>");
     
     // add stuff, make cards first in giant var, then add all at once to speed things up
     var cards = "";
