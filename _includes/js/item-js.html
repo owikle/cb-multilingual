@@ -17,8 +17,8 @@
         /* add item title */
         var objectTitleEn = record.title_en;
         var objectTitleEs = record.title_es;
-        document.getElementById("bc-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish display-none">' + objectTitleEs + '</span>';
-        document.getElementById("item-title").innerHTML = '<span class="english">' + objectTitleEn + '</span><span class="spanish display-none">' + objectTitleEs + '</span>';
+        document.getElementById("bc-title").innerHTML = '<span class="eng">' + objectTitleEn + '</span><span class="spa">' + objectTitleEs + '</span>';
+        document.getElementById("item-title").innerHTML = '<span class="eng">' + objectTitleEn + '</span><span class="spa">' + objectTitleEs + '</span>';
         /* add object */ 
         var format = "" + record.format;
         var objectLink = record.filename;
@@ -90,10 +90,10 @@
                     browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
                 }
             }
-            fields += '<dt class="field {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish display-none{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish display-none{% endif %}">' + browseLinks + '</dd>';
+            fields += '<span class="{% if f.field contains "-eng" %}eng{% elsif f.field contains "-es" %}spa{% endif %}"><dt class="field">{{ f.display_name }}:</dt> <dd class="field-value">' + browseLinks + '</dd></span>';
         }
         {%- else -%}
-        if (record[{{ f.field | jsonify }}]) { fields += '<dt class="field {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish display-none{% endif %}">{{ f.display_name }}:</dt> <dd class="field-value {% if f.field contains "-eng" %}english{% elsif f.field contains "-es" %}spanish display-none{% endif %}">{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd>'; }
+        if (record[{{ f.field | jsonify }}]) { fields += '<span class="{% if f.field contains "-eng" %}eng{% elsif f.field contains "-es" %}spa{% endif %}"><dt class="field">{{ f.display_name }}:</dt> <dd class="field-value">{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank">' + record[{{ f.field | jsonify }}] + '</a>{% else %}' + record[{{ f.field | jsonify }}] + '{% endif %}</dd></span>'; }
         {% endif %}{% endfor %}
         fields += '</dl>';
         document.getElementById("item-metadata").innerHTML = fields;
@@ -146,34 +146,5 @@
     document.getElementById("loading").style.display = "none";
 
 })();
-
-// switch out display-none classes based on selected language
-function changeLang(visible, hidden){
-    for (var i = 0; i < visible.length; i++){
-        visible[i].classList.remove('display-none');
-    }
-    for (var i = 0; i < hidden.length; i++){
-        hidden[i].classList.add('display-none');
-    }
-}
-
-// set selected language to visible
-function enLang() {
-    var visibleElements = document.getElementsByClassName('english');
-    var hiddenElements = document.getElementsByClassName('spanish');
-    changeLang(visibleElements, hiddenElements);
-}
-function esLang() {
-    var visibleElements = document.getElementsByClassName('spanish');
-    var hiddenElements = document.getElementsByClassName('english');
-    changeLang(visibleElements, hiddenElements);
-}
-
-// button selects language
-var enBtn = document.getElementById('english');
-enBtn.addEventListener("click", enLang);
-
-var esBtn = document.getElementById('spanish');
-esBtn.addEventListener("click", esLang);
 
 </script>

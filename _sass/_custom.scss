@@ -3,6 +3,10 @@
     This allows you to override any CollectionBuilder or Bootstrap CSS without modifying the base theme files directly.
 */
 
-.display-none {
+.eng {
+    display: none;
+}
+
+.spa {
     display: none;
 }
