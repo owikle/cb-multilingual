@@ -10,10 +10,7 @@
                 {% for nav in navItems %}
                 {% if nav.stub %}
                 <li class="nav-item english {% if page.url == nav.stub %}active{% endif %}">
-                    <a class="nav-link " href="{{ nav.stub | relative_url }}">{{ nav.display_name }}</a>
-                </li>
-                <li class="nav-item spanish display-none {% if page.url == nav.stub %}active{% endif %}">
-                    <a class="nav-link " href="{{ nav.stub | relative_url }}">{{ nav.spanish_name }}</a>
+                    <a class="nav-link " href="{{ nav.stub | relative_url }}"><span class="eng">{{ nav.display_name }}</span><span class="spa">{{ nav.spanish_name }}</span></a>
                 </li>
                 {%- else -%}
                 <li class="nav-item dropdown">
