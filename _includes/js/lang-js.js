@@ -8,6 +8,8 @@ if (localStorage.getItem("lang")) {
     site_language = "eng";
     // set value in local store
     localStorage.setItem("lang","eng");
+    // set default button to checked
+    document.querySelector("#" + site_language).checked = true;
 }
 
 // show the default language
@@ -24,5 +26,8 @@ $("input[name='lang_options']").change(function(){
     // store the new selected language
     localStorage.setItem("lang", site_language);
 });
+
+// set selected button to checked
+document.querySelector("#" + site_language).checked = true;
 
 //document.querySelectorAll(".eng").forEach( node => node.classList.add("display-none"));
