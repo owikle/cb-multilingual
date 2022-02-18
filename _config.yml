@@ -29,6 +29,13 @@ description: "CollectionBuilder-GH is a template for creating small digital coll
 # creator of the digital collection, to appear in meta tags; we typically use our GitHub usernames but feel free to just use your name
 author: owikle
 
+# set languages used on site
+site_languages: 
+- lang_id: eng
+  lang_display: English
+- lang_id: spa
+  lang_display: Español
+
 ##########
 # COLLECTION SETTINGS
 #
