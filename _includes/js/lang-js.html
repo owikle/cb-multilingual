@@ -1,3 +1,4 @@
+<script>
 // get site language, store in localStorage, or load from localStorage
 var site_language = ""; 
 if (localStorage.getItem("lang")) { 
@@ -32,3 +33,4 @@ $("input[name='lang_options']").change(function(){
 document.querySelector("#" + site_language).checked = true;
 
 //document.querySelectorAll(".eng").forEach( node => node.classList.add("display-none"));
+</script>
