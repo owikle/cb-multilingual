@@ -1,9 +1,9 @@
-display_name,spanish_name,stub,dropdown_parent
-Home,Inicio,/
-Browse,Navegar,/browse.html
-Subjects,Sujetos,/subjects.html
-Locations,Ubicaciones,/locations.html
-Map,Mapa,/map.html
-Timeline,Cronología,/timeline.html
-Data,Datos,/data.html
-About,Acerca de,/about.html
+display_name,stub,dropdown_parent
+<span id='nav-home' class='translate'></span>,/
+<span id='nav-browse' class='translate'></span>,/browse.html
+<span id='nav-subjects' class='translate'></span>,/subjects.html
+<span id='nav-locations' class='translate'></span>,/locations.html
+<span id='nav-map' class='translate'></span>,/map.html
+<span id='nav-timeline' class='translate'></span>,/timeline.html
+<span id='nav-data' class='translate'></span>,/data.html
+<span id='nav-about' class='translate'></span>,/about.html
