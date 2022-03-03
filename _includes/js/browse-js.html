@@ -128,7 +128,7 @@ function makeCard(obj) {
       }
     }
     // add number 
-    $("#numberOf").html(filteredItems.length + " <span class='eng'>of {{ items | size }} items</span><span class='spa'>de {{ items | size }} elementos</span>");
+    $("#numberOf").html(filteredItems.length + " <span data-translate='of' class='translate'></span> {{ items | size }} <span data-translate='items' class='translate'></span>");
     
     // add stuff, make cards first in giant var, then add all at once to speed things up
     var cards = "";
