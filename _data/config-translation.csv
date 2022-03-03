@@ -1,3 +1,26 @@
 span_id,description,eng,spa
 example1,Example heading,About Example,Acerca del ejemplo
-example2,example button text,Help,Ayuda 
+example2,example button text,Help,Ayuda
+nav-home,,Home,Inicio
+nav-browse,,Browse,Navegar
+nav-subjects,,Subjects,Sujetos
+nav-locations,,Locations,Ubicaciones
+nav-map,,Map,Mapa
+nav-timeline,,Timeline,Cronología
+nav-data,,Data,Datos
+nav-about,,About,Acera de
+site-title,,site.title,
+site-description,,site.description,
+home-description,home page description,Description,Descripción
+home-learn,,Learn More,
+home-items,,Sample Items,Elementos de Muestra
+home-time,,Time Span,
+home-subjects,,Top Subjects,
+home-locations,,Locations,
+home-objects,,Objects,
+home-objects-images,,Images,
+home-table,,View table,
+home-data,,Collection as Data,
+home-download,,click to download,
+home-built,,built with,
+home-update,,Last updated,
