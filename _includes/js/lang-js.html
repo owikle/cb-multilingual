@@ -1,5 +1,5 @@
 <script>
-    
+
 // set up translations dictionary
 var translations = { 
     {% for t in site.data.config-translation %}
@@ -16,7 +16,9 @@ function fillTranslationSpans () {
     document.querySelectorAll(".translate").forEach( node => {
         // find text for site language
         // there needs to be a bunch of ifs to ensure there is a fall back!
-        let span_text = translations[node.id][site_language];
+        let id = node.getAttribute("data-translate");
+        console.log(id);
+        let span_text = translations[id][site_language];
         // add to the span element
         node.innerHTML = span_text;
     });

@@ -1,9 +1,9 @@
 display_name,stub,dropdown_parent
-<span id='nav-home' class='translate'></span>,/
-<span id='nav-browse' class='translate'></span>,/browse.html
-<span id='nav-subjects' class='translate'></span>,/subjects.html
-<span id='nav-locations' class='translate'></span>,/locations.html
-<span id='nav-map' class='translate'></span>,/map.html
-<span id='nav-timeline' class='translate'></span>,/timeline.html
-<span id='nav-data' class='translate'></span>,/data.html
-<span id='nav-about' class='translate'></span>,/about.html
+<span data-translate='nav-home' class='translate'></span>,/
+<span data-translate='nav-browse' class='translate'></span>,/browse.html
+<span data-translate='nav-subjects' class='translate'></span>,/subjects.html
+<span data-translate='nav-locations' class='translate'></span>,/locations.html
+<span data-translate='nav-map' class='translate'></span>,/map.html
+<span data-translate='nav-timeline' class='translate'></span>,/timeline.html
+<span data-translate='nav-data' class='translate'></span>,/data.html
+<span data-translate='nav-about' class='translate'></span>,/about.html

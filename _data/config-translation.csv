@@ -9,18 +9,36 @@ nav-map,,Map,Mapa
 nav-timeline,,Timeline,Cronología
 nav-data,,Data,Datos
 nav-about,,About,Acera de
-site-title,,site.title,
-site-description,,site.description,
+site-title,,CollectionBuilder-Multilingual,CollectionBuilder Plurilingüe
+site-tagline,,a template for creating simple digital exhibits,una plantilla para crear exhibiciones digitales simples en varios idiomas
+site-description,,CollectionBuilder-GH is a template for creating small digital collection exhibits on GitHub Pages designed for teaching digital library skills,CollectionBuilder-GH es una plantilla para crear pequeñas exhibiciones de colecciones digitales en páginas de GitHub diseñadas para enseñar habilidades de biblioteca digital
+home-featured-image,,Featured Image,Foto principal
 home-description,home page description,Description,Descripción
-home-learn,,Learn More,
-home-items,,Sample Items,Elementos de Muestra
-home-time,,Time Span,
-home-subjects,,Top Subjects,
-home-locations,,Locations,
-home-objects,,Objects,
-home-objects-images,,Images,
-home-table,,View table,
-home-data,,Collection as Data,
-home-download,,click to download,
-home-built,,built with,
-home-update,,Last updated,
+home-learn,,Learn More,Aprende más
+home-carousel-items,,Sample Items,Artículos de muestra
+home-view-item,,View Item,Ver ítem
+home-time,,Time Span,Espacio de tiempo
+home-timeline,,View Timeline,Ver línea de tiempo
+home-subjects,,Top Subjects,Temas principales
+home-locations,,Locations,Ubicaciones
+home-objects,,Objects,Objetos
+home-objects-images,,Images,Imágenes
+home-objects-audio,,Audio,Audio
+home-objects-video,,Videos,Vídeos
+home-objects-pdf,,PDFs,PDFs
+home-table,,View table,Ver tabla
+home-data,,Collection as Data,Recopilación como datos
+home-download,,click to download,haga clic para descargar
+home-built,,built with,construido con
+home-update,,Last updated,Última actualización
+home-button-metadata-csv,,Metadata CSV,metadatos CSV
+home-button-metadata-json,,Metadata JSON,Metadatos JSON
+home-button-subjects-csv,,Subjects CSV,Sujetos CSV
+home-button-subjects-json,,Subjects JSON,Sujetos JSON
+home-button-geodata-json,,Geodata JSON,Geodatos JSON
+home-button-locations-csv,,Locations CSV,Ubicaciones CSV
+home-button-locations-json,,Locations JSON,Ubicaciones JSON
+home-button-timeline-json,,Timeline JSON,Línea de tiempo JSON
+home-button-facets-json,,Facets JSON,Facetas JSON
+home-button-source-code,,Source Code,Código fuente
+to,,to,a

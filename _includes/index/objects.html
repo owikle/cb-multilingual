@@ -2,7 +2,7 @@
 {%- assign types = "image;audio;video;application" | split: ";" -%}
 <div class="card mb-3" >
     <div class="card-body">
-        <h5 class="card-title">Objects</h5>
+        <h5 class="card-title"><span data-translate="home-objects" class="translate"></span></h5>
         <p class="card-text">
             {% for t in types %}
             {%- assign count = formats | where_exp: 'item','item contains t' | size -%}
@@ -10,17 +10,17 @@
             {{ count }}
             {% case t %}
             {% when 'image' %} 
-            <a class="text-dark" href="{{ 'image' | prepend: '/browse.html#' | relative_url }}">Images <span class="far fa-image"></span></a><br>
+            <a class="text-dark" href="{{ 'image' | prepend: '/browse.html#' | relative_url }}"><span data-translate="home-objects-images" class="translate"></span> <span class="far fa-image"></span></a><br>
             {% when 'audio' %}
-            <a class="text-dark" href="{{ 'audio' | prepend: '/browse.html#' | relative_url }}">Audio <span class="far fa-file-audio"></span></a><br>
+            <a class="text-dark" href="{{ 'audio' | prepend: '/browse.html#' | relative_url }}"><span data-translate="home-objects-audio" class="translate"></span> <span class="far fa-file-audio"></span></a><br>
             {% when 'video' %}
-            <a class="text-dark" href="{{ 'video' | prepend: '/browse.html#' | relative_url }}">Videos <span class="far fa-file-video"></span></a><br>
+            <a class="text-dark" href="{{ 'video' | prepend: '/browse.html#' | relative_url }}"><span data-translate="home-objects-video" class="translate"></span> <span class="far fa-file-video"></span></a><br>
             {% else %}
-            <a class="text-dark" href="{{ 'pdf' | prepend: '/browse.html#' | relative_url }}">PDFs <span class="far fa-file"></span></a><br>
+            <a class="text-dark" href="{{ 'pdf' | prepend: '/browse.html#' | relative_url }}"><span data-translate="home-objects-pdf" class="translate"></span> <span class="far fa-file"></span></a><br>
             {% endcase %}
             {% endif %}
             {%- endfor -%}
-            <a class="btn btn-sm btn-outline-secondary mt-2" href="{{ '/data.html' | relative_url }}">View table</a>
+            <a class="btn btn-sm btn-outline-secondary mt-2" href="{{ '/data.html' | relative_url }}"><span data-translate="home-table" class="translate"></span></a>
         </p>
     </div>
 </div>

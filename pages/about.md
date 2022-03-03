@@ -8,9 +8,9 @@ credits: true
 # Look in _includes/feature for options to easily add features to the page
 ---
 
-# <span id="example1" class="translate"></span>
+# <span data-translate="example1" class="translate"></span>
 
-<a href="" class="btn btn-success"><span id="example2" class="translate"></span>
+<a href="" class="btn btn-success"><span data-translate="example2" class="translate"></span>
 
 {% include feature/jumbotron.html objectid="https://cdil.lib.uidaho.edu/images/palouse_sm.jpg" %}
 
