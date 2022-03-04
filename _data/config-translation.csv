@@ -1,6 +1,4 @@
-span_id,description,eng,spa
-example1,Example heading,About Example,Acerca del ejemplo
-example2,example button text,Help,Ayuda
+span_data,description,eng,spa
 nav-home,,Home,Inicio
 nav-browse,,Browse,Navegar
 nav-subjects,,Subjects,Sujetos
@@ -31,16 +29,17 @@ home-data,,Collection as Data,Recopilación como datos
 home-download,,click to download,haga clic para descargar
 home-built,,built with,construido con
 home-update,,Last updated,Última actualización
-home-button-metadata-csv,,Metadata CSV,metadatos CSV
-home-button-metadata-json,,Metadata JSON,Metadatos JSON
-home-button-subjects-csv,,Subjects CSV,Sujetos CSV
-home-button-subjects-json,,Subjects JSON,Sujetos JSON
-home-button-geodata-json,,Geodata JSON,Geodatos JSON
-home-button-locations-csv,,Locations CSV,Ubicaciones CSV
-home-button-locations-json,,Locations JSON,Ubicaciones JSON
-home-button-timeline-json,,Timeline JSON,Línea de tiempo JSON
-home-button-facets-json,,Facets JSON,Facetas JSON
-home-button-source-code,,Source Code,Código fuente
+metadata-csv,,Metadata CSV,Metadatos CSV
+metadata-json,,Metadata JSON,Metadatos JSON
+subjects-csv,,Subjects CSV,Sujetos CSV
+subjects-json,,Subjects JSON,Sujetos JSON
+geodata-json,,Geodata JSON,Geodatos JSON
+locations-csv,,Locations CSV,Ubicaciones CSV
+locations-json,,Locations JSON,Ubicaciones JSON
+timeline-json,,Timeline JSON,Línea de tiempo JSON
+facets-json,,Facets JSON,Facetas JSON
+timelinejs-json,,TimelineJS JSON,TimelineJS JSON
+source-code,,Source Code,Código fuente
 to,,to,a
 of,,of,de
 search,,Search,Buscar
@@ -58,3 +57,30 @@ locations-browse,,Browse Locations,Buscar Ubicaciones
 locations-text,,"Use this word cloud visualization to browse locations. Word size is determined by frequency and all words link to a corresponding collection search.","Utilice esta visualización de nube de palabras para buscar ubicaciones. El tamaño de la palabra está determinado por la frecuencia y todas las palabras se vinculan a una búsqueda de colección correspondiente."
 collection-timeline,,Collection Timeline,Cronología de la colección
 year,,Year,Año
+data-title,,Collection Metadata,Metadatos de la colección
+data-text,,"The table below provides sorting and basic search of the collection contents. Use the 'CSV' or 'Excel' button below to download the filtered metadata you see on the page in your preferred format. Alternatively, click the 'Download' button at the top right to view the full collection metadata in various export formats.","La siguiente tabla proporciona clasificación y búsqueda básica de los contenidos de la colección. Use el botón 'CSV' o 'Excel' a continuación para descargar los metadatos filtrados que ve en la página en su formato preferido. Alternativamente, haga clic en el botón 'Descargar' en la parte superior derecha para ver los metadatos completos de la colección en varios formatos de exportación."
+data-download,,Download Data,Descargar datos
+collection-data,,Collection Data,Datos de la colección
+collection-data-text,,Download this collection's data in a variety of reusable formats.,Descargue los datos de esta colección en una variedad de formatos reutilizables.
+complete-metadata,,Complete Metadata,Metadatos completos
+complete-metadata-text,,"All metadata fields for all collection items, available as a CSV spreadsheet (usable in Excel, Google Sheets, and similar programs) or JSON file (often used with web applications).","Todos los campos de metadatos para todos los elementos de la colección, disponibles como una hoja de cálculo CSV (utilizable en Excel, Hojas de cálculo de Google y programas similares) o archivo JSON (usado a menudo con aplicaciones web)."
+metadata-facets,,Metadata Facets,Facetas de metadatos
+metadata-facets-text,,"List of unique values and their count for specific metadata fields, useful for understanding content of the fields.","Lista de valores únicos y su recuento para campos de metadatos específicos, útil para comprender el contenido de los campos."
+subject-metadata,,Subject Metadata,Metadatos del asunto
+subject-metadata-text,,"Unique values and counts of subject metadata, useful for further analyzing the content of this collection.","Valores únicos y recuentos de metadatos de materias, útiles para analizar más a fondo el contenido de esta colección."
+data-locations,,Locations,Ubicaciones
+data-locations-text,,"Unique values and counts of location metadata, useful for further visualization and analysis of this collection's place names.","Valores únicos y recuentos de metadatos de ubicación, útiles para una mayor visualización y análisis de los nombres de lugares de esta colección."
+data-geojson,,GeoJSON,GeoJSON
+data-geojson-text,,"Metadata for all collection items that have geographic coordinates in <a href='https://en.wikipedia.org/wiki/GeoJSON' target='_blank' rel='noopener'>GeoJSON</a> format, useful for further exploration and analysis of this collection through a geographical lense.","Metadatos para todos los elementos de la colección que tienen coordenadas geográficas en <a href='https://en.wikipedia.org/wiki/GeoJSON' target='_blank' rel='noopener'>GeoJSON</a> formato, útil para una mayor exploración y análisis de esta colección a través de una lente geográfica."
+data-timeline,,Timeline,Línea de tiempo
+data-timeline-text,,"A time-focused JSON data export designed for use with <a href='https://timeline.knightlab.com/' target='_blank' rel='noopener'>TimelineJS</a>.","Una exportación de datos JSON centrada en el tiempo diseñada para su uso con <a href='https://timeline.knightlab.com/' target='_blank' rel='noopener'>TimelineJS</a>."
+data-source,,Website Source Code,Código fuente del sitio web
+data-source-text,,"GitHub repository containing source code for this project built with <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-GH</a>.","Repositorio de GitHub que contiene el código fuente de este proyecto creado con <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-GH</a>."
+contents,,Contents,Contenido
+tech,,Tech,tecnología
+tech-heading,,Technical Credits - CollectionBuilder,Créditos técnicos - CollectionBuilder
+tech-info,,More Information Available,Más información disponible
+tech-specs,,Technical Specifications,Especificaciones técnicas
+tech-imls,,IMLS Support,Soporte IMLS
+tech-p1,,"This digital collection is built with <a href='https://collectionbuilder.github.io/' target='_blank' rel='noopener'>CollectionBuilder</a>, an open source tool for creating digital collection and exhibit websites that is developed by faculty librarians at the University of Idaho Library following the <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a> methodology.","Esta colección digital está construida con <a href='https://collectionbuilder.github.io/' target='_blank' rel='noopener'>CollectionBuilder</a>, una herramienta de código abierto para crear colecciones digitales y sitios web de exposiciones desarrollado por los bibliotecarios de la facultad de la Biblioteca de la Universidad de Idaho siguiendo el <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a> <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a>."
+tech-p2,,"This site is built using <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-gh</a> which utilizes the static website generator <a href='https://jekyllrb.com/' target='_blank' rel='noopener'>Jekyll</a> and <a href='https://pages.github.com/' target='_blank' rel='noopener'>GitHub Pages</a> to build and host digital collections and exhibits.","Este sitio está construido usando <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-gh</a> que utiliza el generador de sitios web estáticos <a href='https://jekyllrb.com/' target='_blank' rel='noopener'>Jekyll</a> y <a href='https://pages.github.com/' target='_blank' rel='noopener'>GitHub Pages</a> para construir y albergar colecciones y exhibiciones digitales."

@@ -3,7 +3,7 @@
 // set up translations dictionary
 var translations = { 
     {% for t in site.data.config-translation %}
-    "{{ t.span_id }}": { 
+    "{{ t.span_data }}": { 
         {% for l in site.site_languages %}
         "{{ l.lang_id }}": "{{ t[l.lang_id] }}"{% unless forloop.last %},{% endunless %}{% endfor %}
     }{% unless forloop.last %},{% endunless %}
