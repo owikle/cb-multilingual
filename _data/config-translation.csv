@@ -56,3 +56,5 @@ subjects-browse,,Browse Subjects,Buscar Sujetos
 subjects-text,,"Use this word cloud visualization to browse terms and subjects. Word size is determined by frequency and all words link to a corresponding collection search.","Utilice esta visualización de nube de palabras para buscar términos y temas. El tamaño de la palabra está determinado por la frecuencia y todas las palabras se vinculan a una búsqueda de colección correspondiente."
 locations-browse,,Browse Locations,Buscar Ubicaciones
 locations-text,,"Use this word cloud visualization to browse locations. Word size is determined by frequency and all words link to a corresponding collection search.","Utilice esta visualización de nube de palabras para buscar ubicaciones. El tamaño de la palabra está determinado por la frecuencia y todas las palabras se vinculan a una búsqueda de colección correspondiente."
+collection-timeline,,Collection Timeline,Cronología de la colección
+year,,Year,Año
