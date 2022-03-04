@@ -8,7 +8,6 @@ permalink: /subjects.html
 cloud-fields: site.data.theme.subjects-fields
 ---
 
-## Browse Subjects
+## <span data-translate="subjects-browse" class="translate"></span>
 
-Use this word cloud visualization to browse terms and subjects.
-Word size is determined by frequency and all words link to a corresponding collection search.
+<span data-translate="subjects-text" class="translate"></span>
