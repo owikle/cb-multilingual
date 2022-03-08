@@ -1,20 +1,20 @@
-field,display_name,browse_link,external_link
-title-eng,Title,
-title-es,Título
-creator,Creator,
-date,Date Created,
-description-eng,Description,
-description-es,Descripción
-subject-eng,Subjects,true
-subject-es,Asignaturas,true
-location-eng,Location
-location-es,Ubicación
-latitude,Latitude
-longitude,Longitude
-source,Source
-identifier,Source Identifier,,
-type,Type,
-format,Format,
-rights-eng,Rights,
-rights-es,Derechos
-rightsstatement,Rights Statement,,true
+field,language,display_name,browse_link,external_link
+title-eng,eng,Title,
+title-es,spa,Título
+creator,,Creator,
+date,,Date Created,
+description-eng,eng,Description,
+description-es,spa,Descripción
+subject-eng,eng,Subjects,true
+subject-es,spa,Asignaturas,true
+location-eng,eng,Location
+location-es,spa,Ubicación
+latitude,,Latitude
+longitude,,Longitude
+source,,Source
+identifier,,Source Identifier,,
+type,,Type,
+format,,Format,
+rights-eng,eng,Rights,
+rights-es,spa,Derechos
+rightsstatement,,Rights Statement,,true
