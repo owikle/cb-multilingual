@@ -40,13 +40,23 @@ timeline-json,Timeline JSON download button,Timeline JSON,Línea de tiempo JSON
 facets-json,Facets JSON download button,Facets JSON,Facetas JSON
 timelinejs-json,TimelineJS JSON download button,TimelineJS JSON,TimelineJS JSON
 source-code,Source code download button,Source Code,Código fuente
+view-full,Instructions underneath item image,Click to view full screen,Click para ver pantalla completa
 item-download-image,Item page image download button,Download Image,Descargar imagen
+pdf-render,Instructions for PDF not rendering on item page,The PDF is not rendering in your browser. Please use the button below to download the PDF.,El PDF no se muestra en su navegador. Utilice el botón de abajo para descargar el PDF.
 item-download-pdf,Item page pdf download button,Download PDF,Descargar PDF
+audio-support,Notification that browser does not support audio on item page,Your browser does not support the audio element.,Su navegador no es compatible con el elemento de audio.
 item-download-audio,Item page audio download button,Download Audio File,Descargar archivo de audio
 item-view-youtube,Item page youtube view button,View on Youtube,Ver en Youtube
 item-view-vimeo,Item page vimeo view button,View on Vimeo,Ver en Vimeo
+video-support,Notification that browser does not support video on item page,Your browser does not support the video element.,Su navegador no soporta el elemento de vídeo.
 item-download-video,Item page video download button,Download Video File,Descargar archivo de vídeo
 item-download-object,Item page object download button,Download objeto,Descargar objeto
+view-timeline,View on timeline button on item page,View on Timeline,Ver en la línea de tiempo
+view-map,View on map button on itme page,View on Map,Ver en el mapa
+item-previous,
+item-next,
+back-to-browse,Back to browse button
+back-to-collection-browse
 to,to,to,a
 of,of,of,de
 search,Browse search button,Search,Buscar

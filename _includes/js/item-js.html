@@ -23,27 +23,27 @@
         var objectLink = record.filename;
         var itemImage, itemLink;
         if (format.includes('image')) {
-            itemImage= '<div class="gallery-img" data-src="' + objectLink + '"><img class="img-fluid" src="' + objectLink + '" alt="' + objectTitle + '"><p><small>Click to view full screen</small></p></div>';
+            itemImage= '<div class="gallery-img" data-src="' + objectLink + '"><img class="img-fluid" src="' + objectLink + '" alt="' + objectTitle + '"><p><small><span data-translate="view-full" class="translate"></span></small></p></div>';
             itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-download-image" class="translate"></span></a>';
         } else if (format.includes('pdf')) {
-            itemImage= '<object data="' + objectLink + '" type="application/pdf" width="100%" height="450px"><p>The PDF is not rendering in your browser. Please use the button below to download the PDF.</p></object>';
-            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download">Download PDF</a>';
+            itemImage= '<object data="' + objectLink + '" type="application/pdf" width="100%" height="450px"><span data-translate="pdf-render" class="translate"></span></object>';
+            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-download-pdf" class="translate"></span></a>';
         } else if (format.includes('audio')) {
-            itemImage= '<audio controls class="w-100"><source src="' + objectLink + '">Your browser does not support the audio element.</audio>';
-            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download">Download Audio File</a>';
+            itemImage= '<audio controls class="w-100"><source src="' + objectLink + '"><span data-translate="audio-support" class="translate"></span></audio>';
+            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-download-audio" class="translate"></span></a>';
         } else if (record.youtube) {
             itemImage= '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/' + record.youtube + '?rel=0&modestbranding=1" allowfullscreen></iframe></div>';
-            itemLink= '<a href="https://youtu.be/' + record.youtube + '" target="_blank" class="btn btn-dark" title="Object download">View on YouTube</a>';
+            itemLink= '<a href="https://youtu.be/' + record.youtube + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-view-youtube" class="translate"></span></a>';
         } else if (record.vimeo) {
             itemImage= '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://player.vimeo.com/video/' + record.vimeo + '" allowfullscreen></iframe></div>';
-            itemLink= '<a href="https://vimeo.com/' + record.vimeo + '" target="_blank" class="btn btn-dark" title="Object download">View on Vimeo</a>';
+            itemLink= '<a href="https://vimeo.com/' + record.vimeo + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-view-vimeo" class="translate"></span></a>';
         } else if (format.includes('video')) {
-            itemImage= '<video controls class="w-100"><source src="' + objectLink + '">Your browser does not support the video element.</audio>';
-            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download">Download Video File</a>';
+            itemImage= '<video controls class="w-100"><source src="' + objectLink + '"><span data-translate="video-support" class="translate"></span></audio>';
+            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-download-video" class="translate"></span></a>';
         } else {
             /* fall back to no preview if it doesn't know the format */
             itemImage= '<img class="w-50" src="{{ "/assets/img/file.svg" | relative_url }}" alt="No preview found">';
-            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download">Download Object</a>';
+            itemLink= '<a href="' + objectLink + '" target="_blank" class="btn btn-dark" title="Object download"><span data-translate="item-download-object" class="translate"></span></a>';
         }
 
         {% if stubs contains "timeline" %}
@@ -57,13 +57,13 @@
             } else {
                 itemYear = record.date;
             }
-            itemLink += '<a href="{{ "/timeline.html" | relative_url }}#' + itemYear + '" class="ml-2 btn btn-outline-dark">View on Timeline</a>';
+            itemLink += '<a href="{{ "/timeline.html" | relative_url }}#' + itemYear + '" class="ml-2 btn btn-outline-dark"><span data-translate="view-timeline" class="translate"></span></a>';
         }
         {%- endif -%}
         {% if stubs contains "map" %}
         /* add link to view on map */ 
         if (record.latitude && record.longitude) {
-            itemLink += '<a href="{{ '/map.html' | relative_url }}#' + record.latitude + ',' + record.longitude + '" class="ml-2 btn btn-outline-dark">View on Map</a>';
+            itemLink += '<a href="{{ '/map.html' | relative_url }}#' + record.latitude + ',' + record.longitude + '" class="ml-2 btn btn-outline-dark"><span data-translate="view-map" class="translate"></span></a>';
         }
         {%- endif -%}
 
