@@ -1,5 +1,4 @@
-field,display_name,btn,hidden,sort_name
+field-id,display_name,btn,hidden,sort_name
 date,Date,,,<span data-translate='date' class='translate'></span>
 creator,Creator,,,
-location-eng,,true
-location-es,,true
+location,,true

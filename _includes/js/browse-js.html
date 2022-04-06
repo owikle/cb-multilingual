@@ -1,5 +1,6 @@
 {%- assign items = site.data[site.metadata] | where_exp: 'item','item.objectid' -%}
-{%- assign fields = site.data.config-browse -%}
+{%- assign fields = site.data.grand-config-metadata -%}
+{%- assign config = site.data.config-browse -%}
 
 <script>
 
@@ -29,7 +30,7 @@ function makeCard(obj) {
       card += '<a href="' + itemHref + '"> <img class="card-img-top lazyload" data-src="' + imgSrc + '" alt="Image of ' + obj.title + '"></a>';
     }
     // title
-    card += '<div class="card-body text-center"> <h4 class="card-title"><a href="' + itemHref + '" class="text-dark">' + obj.title + '</a></h4>';
+    card += '<div class="card-body text-center"> <h4 class="card-title"><a href="' + itemHref + '" class="text-dark"><span data-translate="title-value-' + obj.id + '" class="translate"></span></a></h4>';
     // thumb for non-photo items
     if(thumbSrc){
       card += '<p><a href="' + itemHref + '"><img class="lazyload w-50" data-src="' + thumbSrc + '" alt="Image of ' + obj.title + '"></a></p>';
@@ -69,7 +70,7 @@ function makeCard(obj) {
       card += '"></span></a></small></p>';
     }
     // view button
-    card += '<hr><a href="' + itemHref + '" class="btn btn-sm btn-light" title="link to ' + obj.title + '"><span class="eng">View Full Record</span><span class="spa">Ver Registro Completo</span></a>';
+    card += '<hr><a href="' + itemHref + '" class="btn btn-sm btn-light" title="link to ' + obj.title + '"><span data-translate="view-record" class="translate"></span>';
     // close divs
     card += '</div></div></div>';
     // send back big string
@@ -91,8 +92,10 @@ function makeCard(obj) {
   /* add items */
   var items = [
     {% for i in items %}
-    { "title":{{ i.title | strip | jsonify }}, "format":{% if i.format %}{{ i.format | jsonify }}{% else %}""{% endif %}, {% for f in fields %}{% if i[f.field] %}{{ f.field | jsonify }}:{{ i[f.field] | strip | jsonify }},{% endif %}{% endfor %} {% if i.youtubeid %} "youtube": {{ i.youtubeid | jsonify }}, {% endif %}{% if  i.filename contains '/' %}"filename": "{{ i.filename }}" {% else %}"filename":"{{ '/objects/' | relative_url | append: i.filename }}"{% endif %}, "id":{{ i.objectid | jsonify }} }{% unless forloop.last %},{% endunless %}{% endfor %}
+    { "title":{{ i.title | strip | jsonify }}, "format":{% if i.format %}{{ i.format | jsonify }}{% else %}""{% endif %}, {% for f in fields %}{% if i[f.field-eng] and i[f.field-spa] %}{{ f.field-id | append: '-display-name' | jsonify }}:{ "eng":{{ f.display_name_eng | jsonify }}, "spa":{{ f.display_name_spa | jsonify }} }, {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: { "eng":{{ i[f.field-eng] | strip | jsonify }}, "spa":{{ i[f.field-spa] | strip | jsonify }} }{% unless forloop.last %},{% endunless %}{% elsif i[f.field-eng] and i[f.field-spa] == nil %}{{ f.field-id | append: '-display-name' | jsonify }}:{ "eng":{{ f.display_name_eng | jsonify }}, "spa":{{ f.display_name_spa | jsonify }} }, {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: {{ i[f.field-eng] | strip | jsonify }}, {%endif %}{% endfor %} {% if i.youtubeid %} "youtube": {{ i.youtubeid | jsonify }}, {% endif %}{% if  i.filename contains '/' %}"filename": "{{ i.filename }}" {% else %}"filename":"{{ '/objects/' | relative_url | append: i.filename }}"{% endif %}, "id":{{ i.objectid | jsonify }} }{% unless forloop.last %},{% endunless %}{% endfor %}
   ];
+
+  console.log(items);
   /* randomize items once at page load */
   shuffle(items);
 
