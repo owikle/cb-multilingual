@@ -1,2 +1,5 @@
-field-id,eng-field,spa-field,
-title,title,title-es,
+field-id,field-eng,field-spa,metadata_display_name_eng,metadata_display_name_spa,browse_display_name_eng,browse_display_name_spa
+title,title,title-es,Title,Título,Title,Título
+creator,,,Creator,Creador,Creator,Creador
+date,,,Date,Fecha,Date,Fecha
+subject,subject-eng,subject-es,Subject,Sujeto,Subject,Sujeto

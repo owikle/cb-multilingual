@@ -32,9 +32,9 @@ custom-foot: js/item-js.html
 
     {%- if site.data.theme.browse-buttons == true -%}
     <div class="text-center">
-        <a id="prev-button" class="btn btn-secondary">&laquo; Previous</a>
-        <a class="btn btn-secondary" href="{{ '/browse.html' | relative_url }}">Back to browse</a>
-        <a id="for-button" class="btn btn-secondary">Next &raquo;</a>
+        <a id="prev-button" class="btn btn-secondary">&laquo; <span data-translate="item-previous" class="translate"></span></a>
+        <a class="btn btn-secondary" href="{{ '/browse.html' | relative_url }}"><span data-translate="back-to-browse" class="translate"></span></a>
+        <a id="for-button" class="btn btn-secondary"><span data-translate="item-next" class="translate"></span> &raquo;</a>
     </div>
 
     <div id="item-nav">
@@ -45,7 +45,7 @@ custom-foot: js/item-js.html
     </div>
     {% else %}
     <div class="text-center">
-        <a class="btn btn-outline-primary" href="{{ '/browse.html' | relative_url }}">&laquo; Back to Collection Browse</a>
+        <a class="btn btn-outline-primary" href="{{ '/browse.html' | relative_url }}">&laquo; <span data-translate="back-to-collection-browse" class="translate"></span></a>
     </div>
     {% endif %}
 </div>

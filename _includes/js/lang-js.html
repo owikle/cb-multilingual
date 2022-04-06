@@ -1,3 +1,6 @@
+{%- assign items = site.data[site.metadata] | where_exp: 'item','item.objectid' -%}
+{%- assign fields = site.data.grand-config-metadata -%}
+
 <script>
 
 // set up translations dictionary
@@ -9,6 +12,15 @@ var translations = {
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
 }
+
+console.log(translations);
+
+var metadata = [
+    {% for i in items %}
+    { "id":{{ i.objectid | jsonify }}, {% for f in fields %}{% if i[f.field-eng] %}{{ f.field-eng | jsonify }}:{{ i[f.field-eng] | strip | jsonify }},{% endif %} {% if i[f.field-spa] %}{{ f.field-spa | jsonify }}:{{ i[f.field-spa] | strip | jsonify }},{% endif %}{% endfor %} }{% unless forloop.last %},{% endunless %}{% endfor %}
+];
+
+console.log(metadata);
 
 // function to set all translated spans
 function fillTranslationSpans () {

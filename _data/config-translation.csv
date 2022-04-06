@@ -53,10 +53,10 @@ item-download-video,Item page video download button,Download Video File,Descarga
 item-download-object,Item page object download button,Download objeto,Descargar objeto
 view-timeline,View on timeline button on item page,View on Timeline,Ver en la línea de tiempo
 view-map,View on map button on itme page,View on Map,Ver en el mapa
-item-previous,
-item-next,
-back-to-browse,Back to browse button
-back-to-collection-browse
+item-previous,Item page previous button,Previous,Previo
+item-next,Item page next button,Next,Próximo
+back-to-browse,Item page back to browse button,Back to browse,Volver a navegar
+back-to-collection-browse,Item page back to collection browse button,Back to Collection Browse,Volver a la colección Examinar
 to,to,to,a
 of,of,of,de
 search,Browse search button,Search,Buscar
