@@ -1,5 +1,15 @@
-field-id,field-eng,field-spa,metadata_display_name_eng,metadata_display_name_spa,browse_display_name_eng,browse_display_name_spa
-title,title,title-es,Title,Título,Title,Título
-creator,,,Creator,Creador,Creator,Creador
-date,,,Date,Fecha,Date,Fecha
-subject,subject-eng,subject-es,Subject,Sujeto,Subject,Sujeto
+field-id,field-eng,field-spa,display_name_eng,display_name_spa
+title,title,title-es,Title,Título
+creator,creator,,Creator,Creador
+date,date,,Date,Fecha
+description,description-eng,description-spa,Description,Descripción
+subject,subject-eng,subject-es,Subject,Sujeto
+location,location-eng,location-es,Location,Ubicación
+latitude,latitude,,Latitude,Latitud
+longitude,longitude,,Longitude,Longitud
+source,source,,Source,Origen
+identifier,identifier,,Source Identifier,Identificador de origen
+type,type,,Type,Tipo
+format,format,,Format,Formato
+rights,rights-eng,rights-es,Rights,Derechos
+rightsstatement,rightsstatement,,Rights Statement,Declaración de derechos

@@ -17,7 +17,7 @@ console.log(translations);
 
 var metadata = [
     {% for i in items %}
-    { "id":{{ i.objectid | jsonify }}, {% for f in fields %}{% if i[f.field-eng] %}{{ f.field-eng | jsonify }}:{{ i[f.field-eng] | strip | jsonify }},{% endif %} {% if i[f.field-spa] %}{{ f.field-spa | jsonify }}:{{ i[f.field-spa] | strip | jsonify }},{% endif %}{% endfor %} }{% unless forloop.last %},{% endunless %}{% endfor %}
+    { "id":{{ i.objectid | jsonify }}, {% for f in fields %}{{ f.field-id | append: '-display-name' | jsonify }}: { "eng":{{ f.display_name_eng | jsonify }},"spa":{{ f.display_name_spa | jsonify }} }, {% if i[f.field-eng] and i[f.field-spa] %} {{ f.field-id | append: '-value' | jsonify }}: { "eng":{{ i[f.field-eng] | strip | jsonify }},"spa":{{ i[f.field-spa] | strip | jsonify }} }{% unless forloop.last %},{% endunless %}{% elsif i[f.field-eng] %}{{ f.field-id | append: '-value' | jsonify }}: {{ i[f.field-eng] | strip | jsonify }} {% unless forloop.last %},{% endunless %}{% endif %}{% endfor %} }{% unless forloop.last %},{% endunless %}{% endfor %}
 ];
 
 console.log(metadata);
@@ -29,7 +29,6 @@ function fillTranslationSpans () {
         // find text for site language
         // there needs to be a bunch of ifs to ensure there is a fall back!
         let id = node.getAttribute("data-translate");
-        console.log(id);
         let span_text = translations[id][site_language];
         // add to the span element
         node.innerHTML = span_text;
