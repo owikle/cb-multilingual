@@ -13,41 +13,21 @@ var translations = {
     {% endfor %}
 }
 
-console.log(translations);
-
-var translationMetadatas = {
+var translationMetadata = {
     {% for f in fields %}
     {{ f.field-id | append: '-display-name' | jsonify }}: { 
         {% for l in site.site_languages %}
         {% assign display = l.lang_id | prepend: 'display_name_' %}
         "{{ l.lang_id }}": {{ f[display] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}
-    },
+    }{% unless forloop.last %},{% endunless %}
     {% endfor %}
-    {% for i in items %}{% for f in fields %}{% if i[f.field-eng] and i[f.field-spa] %}
-    {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: { 
-        {% for l in site.site_languages %}
-        {% assign display = l.lang_id | prepend: 'field-' %}
-        "{{ l.lang_id }}": {{ i[f.display] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}
-    }{% unless forloop.last %},{% endunless %}
-    {% endif %}{% endfor %}{% endfor %}
 }
 
-var translationMetadata = {
-    {% for i in items %}{% for f in fields %}{% if i[f.field-eng] and i[f.field-spa] %}
-    {{ f.field-id | append: '-value-' | jsonify }}: { 
-        {% for l in site.site_languages %}
-        {% assign display = l.lang_id | prepend: 'display_name_' %}
-        "{{ l.lang_id }}": {{ f[display] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}
-    }{% unless forloop.last %},{% endunless %}
-    {% endif %}{% endfor %}{% endfor %}
-}
+const allTranslations = {};
 
-console.log(translationMetadatas);
+$.extend(allTranslations, translations, translationMetadata);
 
-var metadata = [
-    {% for i in items %}
-    { "id":{{ i.objectid | jsonify }}, {% for f in fields %}{{ f.field-id | append: '-display-name' | jsonify }}: { "eng":{{ f.display_name_eng | jsonify }},"spa":{{ f.display_name_spa | jsonify }} }, {% if i[f.field-eng] and i[f.field-spa] %} {{ f.field-id | append: '-value' | jsonify }}: { "eng":{{ i[f.field-eng] | strip | jsonify }},"spa":{{ i[f.field-spa] | strip | jsonify }} }{% unless forloop.last %},{% endunless %}{% elsif i[f.field-eng] and i[f.field-spa] == nil %}{{ f.field-id | append: '-value' | jsonify }}: {{ i[f.field-eng] | strip | jsonify }} {% unless forloop.last %},{% endunless %}{% endif %}{% endfor %} }{% unless forloop.last %},{% endunless %}{% endfor %}
-];
+console.log(allTranslations);
 
 // function to set all translated spans
 function fillTranslationSpans () {
@@ -57,7 +37,7 @@ function fillTranslationSpans () {
         // there needs to be a bunch of ifs to ensure there is a fall back!
         let id = node.getAttribute("data-translate");
         console.log(id);
-        let span_text = translations[id][site_language];
+        let span_text = allTranslations[id][site_language];
         // add to the span element
         node.innerHTML = span_text;
     });
