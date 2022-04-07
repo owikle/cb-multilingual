@@ -23,7 +23,6 @@ var translationFieldNames = {
     {% endfor %}
 }
 
-
 let translationValues = {
     {%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
     {%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
@@ -46,7 +45,7 @@ $.extend(allTranslations, translations, translationFieldNames, translationValues
 
 console.log(allTranslations);
 
-//console.log(allTranslations);
+console.log(allTranslations);
 
 // function to set all translated spans
 function fillTranslationSpans () {

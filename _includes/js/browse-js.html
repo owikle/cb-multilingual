@@ -48,10 +48,9 @@ function makeCard(obj) {
       }
     }
     {% else %}
-    let dataTranslate = '{{ f.field-id | append: "-value-" }}' + obj.id
+    let dataTranslate = '{{ f.field-id | append: "-value-" }}' + obj.id;
     if(obj[dataTranslate]["eng"]){
-      console.log(obj[dataTranslate]["spa"])
-      //card += '<span data-translate="{{ f.field-id | append: "-value-" }}' + obj.id + '" class="translate">';
+      card += '<span data-translate="' + dataTranslate + '" class="translate"></span>';
     } else {
       card += obj[dataTranslate];
     }
