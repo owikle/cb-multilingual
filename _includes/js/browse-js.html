@@ -38,6 +38,7 @@ function makeCard(obj) {
     // other fields
     card += '<p class="card-text">';
     {% for f in fields %}{% unless f.hidden == 'true' %}
+    // create data-translate key for field display name
     if(obj[{{ f.field-id | append: '-display-name' | jsonify }}]){
     card += '<strong><span data-translate="{{ f.field-id | append: "-display-name" }}" class="translate"></span>:</strong> ';
     {% if f.btn == 'true' %}
@@ -48,9 +49,12 @@ function makeCard(obj) {
       }
     }
     {% else %}
+    // get data-translate value for the field
     let dataTranslate = '{{ f.field-id | append: "-value-" }}' + obj.id;
+    // make sure there are two keys, then add span data-translate
     if(obj[dataTranslate]["eng"]){
       card += '<span data-translate="' + dataTranslate + '" class="translate"></span>';
+    // no keys? just add the value
     } else {
       card += obj[dataTranslate];
     }
