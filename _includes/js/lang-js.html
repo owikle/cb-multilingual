@@ -51,6 +51,7 @@ var metadata = {
 }
 console.log(metadata)
 */
+
 // combine all dictionaries into one
 const allTranslations = {};
 
@@ -85,20 +86,13 @@ if (localStorage.getItem("lang")) {
 // set button to checked
 document.querySelector("#" + site_language).checked = true;
 
-// show the default language (from old)
-$("." + site_language).show();
-
 // run function to fill translation spans after load
 fillTranslationSpans();
 
 // radio button selects language
 $("input[name='lang_options']").change(function(){
-    // hide the current language (from old)
-    $("." + site_language).hide();
     // set the selected language
     site_language = this.value;
-    // show the selected language (from old)
-    $("." + site_language).show();
     // store the new selected language
     localStorage.setItem("lang", site_language);
     // run function to fill translation spans
