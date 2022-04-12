@@ -134,7 +134,8 @@ function makeCard(obj) {
       var filteredItems = [];
       for (var i = 0, len = arr.length; i < len; i++) {
         var val = "";
-        for (var k in arr[i]) { val += arr[i][k] + " "; }
+        // make sure both languages are searched
+        for (var k in arr[i]) { arr[i][k]["eng"] ? val += arr[i][k]["eng"] += arr[i][k]["spa"] + " " : val += arr[i][k] + " ";}
         if(val.toUpperCase().indexOf(q) != -1){
           filteredItems.push(arr[i]);
         }
@@ -184,6 +185,8 @@ function makeCard(obj) {
     $('#quickSearch').val(query);
     // filter
     filterItems(items,query);
+    // fill translation spans
+    fillTranslationSpans();
   });
 
 
@@ -217,5 +220,7 @@ $(".browse-sort-item").click(function (event) {
         shuffle(items);
         filterItems(items, query);
     }
+    // fill translation spans
+    fillTranslationSpans();
 }); 
 </script>

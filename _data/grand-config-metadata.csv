@@ -1,9 +1,9 @@
-field-id,field-eng,field-spa,display_name_eng,display_name_spa
+field-id,field-eng,field-spa,display_name_eng,display_name_spa,browse_btn
 title,title,title-es,Title,Título
 creator,creator,,Creator,Creador
 date,date,,Date,Fecha
 description,description-eng,description-es,Description,Descripción
-subject,subject-eng,subject-es,Subject,Sujeto
+subject,subject-eng,subject-es,Subject,Sujeto,true
 location,location-eng,location-es,Location,Ubicación
 latitude,latitude,,Latitude,Latitud
 longitude,longitude,,Longitude,Longitud
