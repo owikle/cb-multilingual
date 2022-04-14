@@ -101,19 +101,26 @@ function makeCard(obj) {
   }
 
   /* add items */
-  // title still included because needed for alt value, also still need ifs to account for selecting buttons and altering display name and sort name in config-browse. First narrow to browse-fields, then check if field is translated. If so, give it translate property. If not give it the value. Single (non-translated) values have been added to translation dictionary in lang-js, so a solution could be created to pull from there rather than repeat it in items json.
   var items = [
     {% for i in items %}
-    { "id":{{ i.objectid | jsonify }}, "title":{{ i.title | jsonify }}, "format":{% if i.format %}{{ i.format | jsonify }}{% else %}""{% endif %},
-    {%- for f in fields -%}{%- for b in browse-fields -%}
-    {%- if f.field-id == b.field-id -%}
+    { "id":{{ i.objectid | jsonify }}, "format":{% if i.format %}{{ i.format | jsonify }}{% else %}""{% endif %},
+    {%- for f in fields -%}
+    {%- for b in browse-fields -%}
     {%- assign firstLangField = f[firstLang] -%}
     {%- assign secondLangField = f[secondLang] -%}
-    {%- if i[firstLangField] and i[secondLangField] -%}
-    {{ f.field-id | strip | jsonify }}: { "translate": true },
-    {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
-    {{ f.field-id | strip | jsonify }}: {{ i[f.field-eng] | strip | jsonify }},
-    {%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor -%}{% if i.youtubeid %} "youtube": {{ i.youtubeid | jsonify }}, {% endif %}{% if  i.filename contains '/' %}"filename": "{{ i.filename }}" {% else %}"filename":"{{ '/objects/' | relative_url | append: i.filename }}"{% endif %} }{% unless forloop.last %},{% endunless %}{% endfor %}
+    {% if f.field-id == 'title' %}
+      {%- if i[firstLangField] and i[secondLangField] -%}
+      "title":{{ i[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ i[secondLangField] | jsonify }},
+      {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
+      "title":{{ i[firstLangField] | jsonify }}
+      {%- endif -%}
+    {%- elsif f.field-id == b.field-id -%}
+      {%- if i[firstLangField] and i[secondLangField] -%}
+      {{ firstLangField | jsonify }}:{{ i[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ i[secondLangField] | jsonify }}, 
+      {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
+      {{ firstLangField | jsonify }}:{{ i[firstLangField] | jsonify }},
+      {%- endif -%}
+    {%- endif -%}{%- endfor -%}{%- endfor -%}{% if i.youtubeid %} "youtube": {{ i.youtubeid | jsonify }}, {% endif %}{% if  i.filename contains '/' %}"filename": "{{ i.filename }}" {% else %}"filename":"{{ '/objects/' | relative_url | append: i.filename }}"{% endif %} }{% unless forloop.last %},{% endunless %}{% endfor %}
   ];
 
   console.log(items);

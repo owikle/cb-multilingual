@@ -26,7 +26,7 @@ custom-foot: js/browse-js.html
                 <button class="dropdown-item browse-sort-item" data-filter="title"><span data-translate="title" class="translate"></span></button>
                 {% assign sort_options = site.data.config-browse | where_exp: 'i','i.sort_name != nil' %}
                 {% for o in sort_options %}
-                <button class="dropdown-item browse-sort-item" data-filter="{{ o.field | escape }}">{{ o.sort_name }}</button>
+                <button class="dropdown-item browse-sort-item" data-filter="{{ o.field-id | escape }}">{{ o.sort_name }}</button>
                 {% endfor %}
             </div>
         </div>
