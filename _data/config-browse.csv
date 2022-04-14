@@ -1,4 +1,4 @@
 field-id,display_name,btn,hidden,sort_name
-date,,,,
+date,,,,<span data-translate='date-sort' class='translate'></span>
 creator,,,true,
-location,,,
+location,,,,
