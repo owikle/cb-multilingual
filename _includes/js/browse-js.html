@@ -39,31 +39,48 @@ function makeCard(obj) {
     }
     // other fields
     card += '<p class="card-text">';
-    {% for b in browse-fields %}{% unless b.hidden == 'true' %}
-    // create data-translate key for field display name
-    if(obj[{{ b.field-id | jsonify }}]){
-    card += '<strong><span data-translate="{{ b.field-id | append: "-display-name" }}" class="translate"></span>:</strong> ';
-    {% if b.btn == 'true' %}
-    var btns = obj[{{ b.field-id | jsonify }}].split(";");
-    for (var i = 0, len = btns.length; i < len; i++) {
-      if(btns[i] != "") {
-        card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+    {% for f in fields %}{% for b in browse-fields %}{% unless b.hidden == 'true' %}
+    {%- assign firstLangField = f[firstLang] -%}
+    {%- assign secondLangField = f[secondLang] -%}
+    {%- if f.field-id == b.field-id -%}
+    var current_language = ""; 
+    if (localStorage.getItem("lang")) { 
+      // get the value from local store
+      current_language = localStorage.getItem("lang");
+    } else { 
+      // set default value
+      current_language = "eng";
+      // set value in local store
+      localStorage.setItem("lang","eng");
+    }
+    var first_lang = {{ firstLangField | jsonify }};
+    var second_lang = {{ secondLangField | jsonify }};
+    if (first_lang.includes(current_language)) {
+      // create data-translate key for field display name
+      if(obj[first_lang]){
+      card += '<strong><span data-translate="{{ b.field-id | append: "-display-name" }}" class="translate"></span>:</strong> ';
+      {% if b.btn == 'true' %}
+      var btns = obj[{{ b.field-id | jsonify }}].split(";");
+      for (var i = 0, len = btns.length; i < len; i++) {
+        if(btns[i] != "") {
+          card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+        }
       }
-    }
-    {% else %}
-    // get data-translate value for the field
-    let dataTranslate = '{{ b.field-id | append: "-value-" }}' + obj.id;
-    // make sure there are lang keys, then add span data-translate
-    if(obj[{{ b.field-id | jsonify }}]["translate"]){
-      card += '<span data-translate="' + dataTranslate + '" class="translate"></span>';
-    // no keys? just add the value
-    } else {
-      card += obj[{{ b.field-id | jsonify }}];
-    }
-    {% endif %}
-    {% unless forloop.last %}card += '<br>';{% endunless %}
-    }
-    {% endunless %}{% endfor %}
+      {% else %}
+      // get data-translate value for the field
+      // let dataTranslate = '{{ b.field-id | append: "-value-" }}' + obj.id;
+      // make sure there are lang keys, then add span data-translate
+      //if(obj[first_lang]){
+      card += obj[first_lang];
+      // no keys? just add the value
+      //} else {
+        //card += obj[{{ b.field-id | jsonify }}];
+      //}
+      {% endif %}
+      {% unless forloop.last %}card += '<br>';{% endunless %}
+      }
+    } 
+    {% endif %}{% endunless %}{% endfor %}{% endfor %}
     card += '</p>';
     // media type
     if(obj.format != "") {
