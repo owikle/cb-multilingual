@@ -39,10 +39,8 @@ function makeCard(obj) {
     }
     // other fields
     card += '<p class="card-text">';
-    {% for f in fields %}{% for b in browse-fields %}{% unless b.hidden == 'true' %}
-    {%- assign firstLangField = f[firstLang] -%}
-    {%- assign secondLangField = f[secondLang] -%}
-    {%- if f.field-id == b.field-id -%}
+
+    // figure out the current language
     var current_language = ""; 
     if (localStorage.getItem("lang")) { 
       // get the value from local store
@@ -53,34 +51,70 @@ function makeCard(obj) {
       // set value in local store
       localStorage.setItem("lang","eng");
     }
-    var first_lang = {{ firstLangField | jsonify }};
-    var second_lang = {{ secondLangField | jsonify }};
-    if (first_lang.includes(current_language)) {
-      // create data-translate key for field display name
-      if(obj[first_lang]){
-      card += '<strong><span data-translate="{{ b.field-id | append: "-display-name" }}" class="translate"></span>:</strong> ';
-      {% if b.btn == 'true' %}
-      var btns = obj[{{ b.field-id | jsonify }}].split(";");
-      for (var i = 0, len = btns.length; i < len; i++) {
-        if(btns[i] != "") {
-          card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+
+    {% for f in fields %}{% for b in browse-fields %}{% unless b.hidden == 'true' %}
+    {%- assign firstLangField = f[firstLang] -%}
+    {%- assign secondLangField = f[secondLang] -%}
+    {%- if f.field-id == b.field-id -%}
+
+    var first_lang = {{ firstLang | jsonify }};
+    var second_lang = {{ secondLang | jsonify }};
+    var first_lang_field = {{ firstLangField | jsonify }};
+    var second_lang_field = {{ secondLangField | jsonify }};
+
+    function addContent(field_name){
+
+    };
+
+    if (second_lang.includes(current_language)){
+      if(obj[second_lang_field]){
+        {% if b.display_name %}card += "<strong>{{ b.display_name }}:</strong> ";{% endif %}
+        {% if b.btn == 'true' %}
+        var btns = obj[second_lang_field].split(";");
+        for (var i = 0, len = btns.length; i < len; i++) {
+          if(btns[i] != "") {
+            card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+          }
         }
+        {% else %}
+        card += obj[second_lang_field];
+        {% endif %}
+        {% unless forloop.last %}card += '<br>';{% endunless %}
+      } else if (obj[first_lang_field]){
+        {% if b.display_name %}card += "<strong>{{ b.display_name }}:</strong> ";{% endif %}
+        {% if b.btn == 'true' %}
+        var btns = obj[first_lang_field].split(";");
+        for (var i = 0, len = btns.length; i < len; i++) {
+          if(btns[i] != "") {
+            card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+          }
+        }
+        {% else %}
+        card += obj[first_lang_field];
+        {% endif %}
+        {% unless forloop.last %}card += '<br>';{% endunless %}
       }
-      {% else %}
-      // get data-translate value for the field
-      // let dataTranslate = '{{ b.field-id | append: "-value-" }}' + obj.id;
-      // make sure there are lang keys, then add span data-translate
-      //if(obj[first_lang]){
-      card += obj[first_lang];
-      // no keys? just add the value
-      //} else {
-        //card += obj[{{ b.field-id | jsonify }}];
-      //}
-      {% endif %}
-      {% unless forloop.last %}card += '<br>';{% endunless %}
+    } else if (first_lang.includes(current_language)){
+      if(obj[first_lang_field]){
+        {% if b.display_name %}card += "<strong>{{ b.display_name }}:</strong> ";{% endif %}
+        {% if b.btn == 'true' %}
+        var btns = obj[first_lang_field].split(";");
+        for (var i = 0, len = btns.length; i < len; i++) {
+          if(btns[i] != "") {
+            card += '<a class="btn btn-sm btn-secondary m-1 text-wrap" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(btns[i].trim()) + '">' + btns[i].trim() + '</a>';
+          }
+        }
+        {% else %}
+        card += obj[first_lang_field];
+        {% endif %}
+        {% unless forloop.last %}card += '<br>';{% endunless %}
       }
-    } 
+    }
+
     {% endif %}{% endunless %}{% endfor %}{% endfor %}
+
+    //second_lang.includes(current_language) ? addContent(second_lang_field) : addContent(first_lang_field);
+
     card += '</p>';
     // media type
     if(obj.format != "") {
