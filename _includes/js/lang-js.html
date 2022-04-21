@@ -1,4 +1,70 @@
+{%- assign items = site.data[site.metadata] | where_exp: 'item','item.objectid' -%}
+{%- assign fields = site.data.grand-config-metadata -%}
+{%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
+{%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
+
 <script>
+
+// set up translations dictionary for site language (from config-translation)
+var translations = { 
+    {% for t in site.data.config-translation %}
+    "{{ t.data_translate }}": { 
+        {% for l in site.site_languages %}
+        "{{ l.lang_id }}": "{{ t[l.lang_id] }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+}
+
+// set up translations dictionary for metadata field names (from grand-config-metadata)
+var translationFieldNames = {
+    {% for f in fields %}
+    {{ f.field-id | append: '-display-name' | jsonify }}: { 
+        {% for l in site.site_languages %}
+        {%- assign display = l.lang_id | prepend: 'display_name_' -%}
+        "{{ l.lang_id }}": {{ f[display] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+}
+
+// find number of languages specified in _config.yml
+var langArraySize = {{ site.site_languages | size }};
+
+// set up translations dictionary for metadata values (from grand-config-metadata)
+var translationValues = {
+    {%- for i in items -%}{%- for f in fields -%}
+    {%- assign firstLangField = f[firstLang] -%}
+    {%- assign secondLangField = f[secondLang] -%}
+    {% if i[firstLangField] and i[secondLangField] %}
+    {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: {
+        {%- for l in site.site_languages -%}
+        {%- assign data-translate = l.lang_id | prepend: 'field-' -%}
+        {%- assign data-value = f[data-translate] -%}
+        "{{ l.lang_id }}": {{ i[data-value] | jsonify }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {% elsif i[firstLangField] and i[secondLangField] == nil %}
+    {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: {{ i[firstLangField] | strip | jsonify }},{% endif %}
+    {% endfor %}{%- endfor -%}
+}
+
+// combine all dictionaries into one
+const allTranslations = {};
+
+$.extend(allTranslations, translations, translationFieldNames, translationValues);
+//console.log(allTranslations);
+
+// function to set all translated spans
+function fillTranslationSpans () {
+    // find all translate spans
+    document.querySelectorAll(".translate").forEach( node => {
+        // find text for site language
+        // there needs to be a bunch of ifs to ensure there is a fall back!
+        let id = node.getAttribute("data-translate");
+        let span_text = allTranslations[id][site_language];
+        // add to the span element
+        node.innerHTML = span_text;
+    });
+}
+
 // get site language, store in localStorage, or load from localStorage
 var site_language = ""; 
 if (localStorage.getItem("lang")) { 
@@ -14,50 +80,20 @@ if (localStorage.getItem("lang")) {
 // set button to checked
 document.querySelector("#" + site_language).checked = true;
 
-// show the default language
-$("." + site_language).show();
+// run function to fill translation spans after load
+fillTranslationSpans();
 
 // radio button selects language
 $("input[name='lang_options']").change(function(){
-    // hide the current language
-    $("." + site_language).hide();
     // set the selected language
     site_language = this.value;
-    // show the selected language
-    $("." + site_language).show();
     // store the new selected language
     localStorage.setItem("lang", site_language);
+    // run function to fill translation spans
+    fillTranslationSpans();
 });
 
 // set selected button to checked
 document.querySelector("#" + site_language).checked = true;
-
-//document.querySelectorAll(".eng").forEach( node => node.classList.add("display-none"));
-
-/* below is test translation span code --> not fully integrated with the switching above yet! */ 
-
-// set up translations dictionary
-var translations = { 
-    {% for t in site.data.config-translation %}
-    "{{ t.span_id }}": { 
-        {% for l in site.site_languages %}
-        "{{ l.lang_id }}": "{{ t[l.lang_id] }}"{% unless forloop.last %},{% endunless %}{% endfor %}
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-}
-// function to set all translated spans
-function fillTranslationSpans () {
-    // find all translate spans
-    document.querySelectorAll(".translate").forEach( node => {
-        // find text for site language
-        // there needs to be a bunch of ifs to ensure there is a fall back!
-        let span_text = translations[node.id][site_language];
-        // add to the span element
-        node.innerHTML = span_text;
-    });
-}
-// run function after load
-fillTranslationSpans();
-
 
 </script>

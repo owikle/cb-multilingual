@@ -16,7 +16,7 @@ custom-foot: js/timeline-js.html
 {%- endif -%}
 <div class="dropdown float-right" id="year-nav">
     <button class="btn btn-info dropdown-toggle" type="button" id="yearButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Year
+        <span data-translate="year" class="translate"></span>
     </button>
     <div class="dropdown-menu" aria-labelledby="yearButton">
         {% for y in navYears %}
@@ -26,7 +26,7 @@ custom-foot: js/timeline-js.html
 
 {{ content }}
 
-<h3><a href="#{{ uniqueYears | first }}">{{ uniqueYears | first }}</a> to <a href="#{{ uniqueYears | last }}">{{ uniqueYears | last }}</a></h3>
+<h3><a href="#{{ uniqueYears | first }}">{{ uniqueYears | first }}</a> <span data-translate="to" class="translate"></span> <a href="#{{ uniqueYears | last }}">{{ uniqueYears | last }}</a></h3>
 
 <table id="timeline" class="table table-striped">
     {% for year in uniqueYears %}

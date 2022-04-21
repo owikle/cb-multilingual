@@ -1,8 +1,8 @@
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title">{% if include.title %}{{ include.title }}{% else %}Description{% endif %}</h5>
-    <p class="card-text">{{ site.description }}</p>
+    <h5 class="card-title"><span data-translate="home-description" class="translate"></span></h5>
+    <p class="card-text"><span data-translate="site-description" class="translate"></span></p>
     {%- assign about = site.data.config-nav | where: "stub","/about.html" | size -%}
-    {% if about > 0 %}<a class="btn btn-outline-primary" href="{{ '/about.html' | relative_url }}" >Learn More &raquo;</a>{% endif %}
+    {% if about > 0 %}<a class="btn btn-outline-primary" href="{{ '/about.html' | relative_url }}" ><span data-translate="home-learn" class="translate"></span> &raquo;</a>{% endif %}
   </div>
 </div>

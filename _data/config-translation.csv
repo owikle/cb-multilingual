@@ -1,3 +1,108 @@
-span_id,description,eng,spa
-example1,Example heading,About Example,Acerca del ejemplo
-example2,example button text,Help,Ayuda 
+data_translate,description,eng,spa
+nav-home,Navigation menu Home option,Home,Inicio
+nav-browse,Navigation menu Browse option,Browse,Búsqueda
+nav-subjects,Navigation menu Subjects option,Subjects,Categorías
+nav-locations,Navigation menu Locations option,Locations,Ubicaciones
+nav-map,Navigation menu Map option,Map,Mapa
+nav-timeline,Navigation menu Timeline option,Timeline,Línea del tiempo
+nav-data,Navigation menu Data option,Data,Datos
+nav-about,Navigation menu About option,About,Sobre
+site-title,Site title,CollectionBuilder-Multilingual,CollectionBuilder Plurilingüe
+site-tagline,Site tagline,a template for creating simple digital exhibits,una plantilla para crear exhibiciones digitales simples en varios idiomas
+site-description,Site description,CollectionBuilder-GH is a template for creating small digital collection exhibits on GitHub Pages designed for teaching digital library skills,CollectionBuilder-GH es una plantilla para crear pequeñas exhibiciones de colecciones digitales en páginas de GitHub diseñadas para enseñar habilidades de biblioteca digital
+home-featured-image,Home featured image button,Featured Image,Foto principal
+home-description,Home description card title,Description,Descripción
+home-learn,Home learn more button,Learn More,Aprende más
+home-carousel-items,Home carousel card title,Sample Items,Artículos de muestra
+home-view-item,Home carousel view item button,View Item,Ver ítem
+home-time,Home time span card title,Time Span,Espacio de tiempo
+home-timeline,Home time span button,View Timeline,Ver línea de tiempo
+home-subjects,Home top subjects card title,Top Subjects,Temas principales
+home-locations,Home top locations card title,Locations,Ubicaciones
+home-objects,Home objects card title,Objects,Objetos
+home-objects-images,Home objects card images button,Images,Imágenes
+home-objects-audio,Home objects card audio button,Audio,Audio
+home-objects-video,Home objects card videos button,Videos,Vídeos
+home-objects-pdf,Home objects card PDFs button,PDFs,PDFs
+home-table,Home objects card button,View table,Ver tabla
+home-data,Home data download card title,Collection as Data,Recopilación como datos
+home-download,Home data download card subtitle,click to download,haga clic para descargar
+home-built,Home footer built with,built with,construido con
+home-update,Home footer last updated,Last updated,Última actualización
+metadata-csv,Metadata CSV download button,Metadata CSV,Metadatos CSV
+metadata-json,Metadata JSON download button,Metadata JSON,Metadatos JSON
+subjects-csv,Subjects CSV download button,Subjects CSV,Sujetos CSV
+subjects-json,Subjects JSON download button,Subjects JSON,Sujetos JSON
+geodata-json,Geodata JSON download button,Geodata JSON,Geodatos JSON
+locations-csv,Locations CSV download button,Locations CSV,Ubicaciones CSV
+locations-json,Locations JSON download button,Locations JSON,Ubicaciones JSON
+timeline-json,Timeline JSON download button,Timeline JSON,Línea de tiempo JSON
+facets-json,Facets JSON download button,Facets JSON,Facetas JSON
+timelinejs-json,TimelineJS JSON download button,TimelineJS JSON,TimelineJS JSON
+source-code,Source code download button,Source Code,Código fuente
+view-full,Instructions underneath item image,Click to view full screen,Click para ver pantalla completa
+item-download-image,Item page image download button,Download Image,Descargar imagen
+pdf-render,Instructions for PDF not rendering on item page,The PDF is not rendering in your browser. Please use the button below to download the PDF.,El PDF no se muestra en su navegador. Utilice el botón de abajo para descargar el PDF.
+item-download-pdf,Item page pdf download button,Download PDF,Descargar PDF
+audio-support,Notification that browser does not support audio on item page,Your browser does not support the audio element.,Su navegador no es compatible con el elemento de audio.
+item-download-audio,Item page audio download button,Download Audio File,Descargar archivo de audio
+item-view-youtube,Item page youtube view button,View on Youtube,Ver en Youtube
+item-view-vimeo,Item page vimeo view button,View on Vimeo,Ver en Vimeo
+video-support,Notification that browser does not support video on item page,Your browser does not support the video element.,Su navegador no soporta el elemento de vídeo.
+item-download-video,Item page video download button,Download Video File,Descargar archivo de vídeo
+item-download-object,Item page object download button,Download objeto,Descargar objeto
+view-timeline,View on timeline button on item page,View on Timeline,Ver en la línea de tiempo
+view-map,View on map button on itme page,View on Map,Ver en el mapa
+item-previous,Item page previous button,Previous,Previo
+item-next,Item page next button,Next,Próximo
+back-to-browse,Item page back to browse button,Back to browse,Volver a navegar
+back-to-collection-browse,Item page back to collection browse button,Back to Collection Browse,Volver a la colección Examinar
+to,to,to,a
+of,of,of,de
+view-record,Browse card View Full Record button,View Full Record,Ver registro completo
+search,Browse search button,Search,Buscar
+reset,Browse reset button,Reset,Reajustar
+sort,Browse sort by button,Sort by,Ordenar
+random,Browse sort by random button,Random,Aleatorio
+title,Browse sort by title button,Title,Título
+date,Browse sort by date button,Date,Fecha
+loading,Browse loading,Loading,Cargando
+items,Browse item count,items,elementos
+browse-items,Browse page title,Browse Items,Buscar Elementos
+subjects-browse,Subjects cloud page title,Browse Subjects,Buscar Sujetos
+subjects-text,Subjects cloud page text,Use this word cloud visualization to browse terms and subjects. Word size is determined by frequency and all words link to a corresponding collection search.,Utilice esta visualización de nube de palabras para buscar términos y temas. El tamaño de la palabra está determinado por la frecuencia y todas las palabras se vinculan a una búsqueda de colección correspondiente.
+locations-browse,Locations cloud page title,Browse Locations,Buscar Ubicaciones
+locations-text,Locations cloud page text,Use this word cloud visualization to browse locations. Word size is determined by frequency and all words link to a corresponding collection search.,Utilice esta visualización de nube de palabras para buscar ubicaciones. El tamaño de la palabra está determinado por la frecuencia y todas las palabras se vinculan a una búsqueda de colección correspondiente.
+collection-timeline,Timeline page title,Collection Timeline,Cronología de la colección
+year,Timeline page year dropdown button,Year,Año
+data-title,Data page title,Collection Metadata,Metadatos de la colección
+data-text,Data page text,"The table below provides sorting and basic search of the collection contents. Use the 'CSV' or 'Excel' button below to download the filtered metadata you see on the page in your preferred format. Alternatively, click the 'Download' button at the top right to view the full collection metadata in various export formats.","La siguiente tabla proporciona clasificación y búsqueda básica de los contenidos de la colección. Use el botón 'CSV' o 'Excel' a continuación para descargar los metadatos filtrados que ve en la página en su formato preferido. Alternativamente, haga clic en el botón 'Descargar' en la parte superior derecha para ver los metadatos completos de la colección en varios formatos de exportación."
+data-download,Data page download data button,Download Data,Descargar datos
+collection-data,Download data modal title,Collection Data,Datos de la colección
+collection-data-text,Download data modal text,Download this collection's data in a variety of reusable formats.,Descargue los datos de esta colección en una variedad de formatos reutilizables.
+complete-metadata,Download data metadata title,Complete Metadata,Metadatos completos
+complete-metadata-text,Download data metadata text,"All metadata fields for all collection items, available as a CSV spreadsheet (usable in Excel, Google Sheets, and similar programs) or JSON file (often used with web applications).","Todos los campos de metadatos para todos los elementos de la colección, disponibles como una hoja de cálculo CSV (utilizable en Excel, Hojas de cálculo de Google y programas similares) o archivo JSON (usado a menudo con aplicaciones web)."
+metadata-facets,Download data facets title,Metadata Facets,Facetas de metadatos
+metadata-facets-text,Download data facets text,"List of unique values and their count for specific metadata fields, useful for understanding content of the fields.","Lista de valores únicos y su recuento para campos de metadatos específicos, útil para comprender el contenido de los campos."
+subject-metadata,Download data subjects title,Subject Metadata,Metadatos del asunto
+subject-metadata-text,Download data subjects text,"Unique values and counts of subject metadata, useful for further analyzing the content of this collection.","Valores únicos y recuentos de metadatos de materias, útiles para analizar más a fondo el contenido de esta colección."
+data-locations,Download data locations title,Locations,Ubicaciones
+data-locations-text,Download data locations text,"Unique values and counts of location metadata, useful for further visualization and analysis of this collection's place names.","Valores únicos y recuentos de metadatos de ubicación, útiles para una mayor visualización y análisis de los nombres de lugares de esta colección."
+data-geojson,Download data geojson title,GeoJSON,GeoJSON
+data-geojson-text,Download data geojson text,"Metadata for all collection items that have geographic coordinates in <a href='https://en.wikipedia.org/wiki/GeoJSON' target='_blank' rel='noopener'>GeoJSON</a> format, useful for further exploration and analysis of this collection through a geographical lense.","Metadatos para todos los elementos de la colección que tienen coordenadas geográficas en <a href='https://en.wikipedia.org/wiki/GeoJSON' target='_blank' rel='noopener'>GeoJSON</a> formato, útil para una mayor exploración y análisis de esta colección a través de una lente geográfica."
+data-timeline,Download data timeline title,Timeline,Línea de tiempo
+data-timeline-text,Download data timeline text,A time-focused JSON data export designed for use with <a href='https://timeline.knightlab.com/' target='_blank' rel='noopener'>TimelineJS</a>.,Una exportación de datos JSON centrada en el tiempo diseñada para su uso con <a href='https://timeline.knightlab.com/' target='_blank' rel='noopener'>TimelineJS</a>.
+data-source,Download data source code title,Website Source Code,Código fuente del sitio web
+data-source-text,Download data source code text,GitHub repository containing source code for this project built with <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-GH</a>.,Repositorio de GitHub que contiene el código fuente de este proyecto creado con <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-GH</a>.
+contents,About page table of contents card title,Contents,Contenido
+tech,About page Tech heading,Tech,tecnología
+tech-heading,Technical card title,Technical Credits - CollectionBuilder,Créditos técnicos - CollectionBuilder
+tech-info,Technical card more information section title,More Information Available,Más información disponible
+tech-specs,Technical card specs button,Technical Specifications,Especificaciones técnicas
+tech-imls,Technical card funding button,IMLS Support,Soporte IMLS
+tech-p1,Technical card first paragraph,"This digital collection is built with <a href='https://collectionbuilder.github.io/' target='_blank' rel='noopener'>CollectionBuilder</a>, an open source tool for creating digital collection and exhibit websites that is developed by faculty librarians at the University of Idaho Library following the <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a> methodology.","Esta colección digital está construida con <a href='https://collectionbuilder.github.io/' target='_blank' rel='noopener'>CollectionBuilder</a>, una herramienta de código abierto para crear colecciones digitales y sitios web de exposiciones desarrollado por los bibliotecarios de la facultad de la Biblioteca de la Universidad de Idaho siguiendo el <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a> <a href='https://lib-static.github.io' target='_blank' rel='noopener'>Lib-STATIC</a>."
+tech-p2,Technical card second paragraph,This site is built using <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-gh</a> which utilizes the static website generator <a href='https://jekyllrb.com/' target='_blank' rel='noopener'>Jekyll</a> and <a href='https://pages.github.com/' target='_blank' rel='noopener'>GitHub Pages</a> to build and host digital collections and exhibits.,Este sitio está construido usando <a href='https://github.com/CollectionBuilder/collectionbuilder-gh' target='_blank' rel='noopener'>CollectionBuilder-gh</a> que utiliza el generador de sitios web estáticos <a href='https://jekyllrb.com/' target='_blank' rel='noopener'>Jekyll</a> y <a href='https://pages.github.com/' target='_blank' rel='noopener'>GitHub Pages</a> para construir y albergar colecciones y exhibiciones digitales.
+about-title,About page title,About CollectionBuilder-GH,Sobre CollectionBuilder-GH
+about-p1,About page CollectionBuilder text,"<p>This demo site features objects from the University of Idaho Library's Digital Collections and is generated using CollectionBuilder-GH, a project to create a free and simple digital collection hosted on GitHub Pages from:</p> <ul><li>a CSV of collection metadata</li><li>a folder of JPG images or PDF documents</li></ul> <p>collectionbuilder-gh is intended as a simple template for hands-on teaching about digital libraries.</p>","<p>Este sitio de demostración presenta objetos de la Colecciones digitales de la Universidad de Idaho y se genera utilizando CollectionBuilder-GH, un proyecto para crear una colección digital gratuita y sencilla alojada en GitHub Pages desde:</p> <ul><li>un CSV de metadatos de la colección</li><li>una carpeta de imágenes JPG o documentos PDF</li></ul> <p>collectionbuilder-gh pretende ser una plantilla simple para la enseñanza práctica sobre bibliotecas digitales.</p>"
+date-sort,Sort by locations on browse sort dropdown,Date,Fecha
+date-created-display-name,Date created field name on item page,Date Created,Fecha de Creacion

@@ -46,7 +46,7 @@ Each translation span is an empty span element with an id attribute matching a `
 For example:
 
 ```
-<span id="example1" class="translate"></span>
+<span data-translate="example1" class="translate"></span>
 ```
 
 Javascript on every page will scan the content for all spans with the `translate` class.

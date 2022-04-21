@@ -8,7 +8,6 @@ permalink: /locations.html
 cloud-fields: site.data.theme.locations-fields
 ---
 
-## Browse Locations
+## <span data-translate="locations-browse" class="translate"></span>
 
-Use this word cloud visualization to browse locations.
-Word size is determined by frequency and all words link to a corresponding collection search.
+<span data-translate="locations-text" class="translate"></span>

@@ -6,4 +6,4 @@ permalink: /browse.html
 # the Browse visualization will be added below the content in this file
 ---
 
-<h2><span class="eng">Browse Items</span><span class="spa">Buscar Elementos</span></h2>
+<h2><span data-translate="browse-items" class="translate"></span></h2>

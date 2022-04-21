@@ -5,17 +5,17 @@ layout: page
 <div class="row">
   <div class="col-md-8">
 
-    {% include index/description.html title="Descripción" %}
-    {% include index/carousel.html title="Elementos de muestra" height="300" %}
+    {% include index/description.html %}
+    {% include index/carousel.html title='<span data-translate="home-carousel-items" class="translate"></span>' btn-text='<span data-translate="home-view-item" class="translate"></span>' height="300" %}
   
   </div>
   <div class="col-md-4">  
 
     {% include index/time.html %}
 
-    {% include index/featured-terms.html field="subject" title="Top Subjects" btn-color="info" %}
+    {% include index/featured-terms.html field="subject" title='<span data-translate="home-subjects" class="translate"></span>' btn-color="info" %}
 
-    {% include index/featured-terms.html field="location" title="Locations" btn-color="outline-secondary" %}
+    {% include index/featured-terms.html field="location" title='<span data-translate="home-locations" class="translate"></span>' btn-color="outline-secondary" %}
 
     {% include index/objects.html %}
 

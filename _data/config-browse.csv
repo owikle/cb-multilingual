@@ -1,5 +1,5 @@
-field,display_name,btn,hidden,sort_name
-date,Date,,,Date
-creator,Creator,,,
-location-eng,,true
-location-es,,true
+field-id,display_name,btn,hidden,sort_name
+date,<span data-translate='date-display-name' class='translate'></span>,,,<span data-translate='date-display-name' class='translate'></span>
+creator,<span data-translate='creator-display-name' class='translate'></span>,,,
+location,,true,,
+subject,,true,,
