@@ -119,48 +119,38 @@
         {% for m in metadata-fields %}{% for f in fields %}{% if f.field-id == m.field-id %}
         {%- assign firstLangField = f[firstLang] -%}
         {%- assign secondLangField = f[secondLang] -%}
+
+        var first_lang_field = {{ firstLangField | jsonify }};
+        var second_lang_field = {{ secondLangField | jsonify }};
+
         {%- if m.browse_link == "true" -%}
+
+        function addLinks(field_value){
+            var topics = field_value.split(';');
+            var browseLinks = "";
+            for (var i = 0, len = topics.length; i < len; i++) {
+                if (topics[i] != "") {
+                    browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
+                }
+            }
+            fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
+        };
+
         if (second_lang.includes(current_language)) {
-            if (record[{{ secondLangField | jsonify }}]) {
-                var topics = record[{{ secondLangField | jsonify }}].split(';');
-                var browseLinks = "";
-                for (var i = 0, len = topics.length; i < len; i++) {
-                    if (topics[i] != "") {
-                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
-                    }
-                }
-                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
-            } else if (record[{{ firstLangField | jsonify }}]) {
-                var topics = record[{{ firstLangField | jsonify }}].split(';');
-                var browseLinks = "";
-                for (var i = 0, len = topics.length; i < len; i++) {
-                    if (topics[i] != "") {
-                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
-                    }
-                }
-                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
-            }
-        } else if (first_lang.includes(current_language)) {
-            if (record[{{ firstLangField | jsonify }}]) {
-                var topics = record[{{ firstLangField | jsonify }}].split(';');
-                var browseLinks = "";
-                for (var i = 0, len = topics.length; i < len; i++) {
-                    if (topics[i] != "") {
-                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
-                    }
-                }
-                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
-            }
-        }
+            if (record[second_lang_field]) { addLinks(record[second_lang_field]); } 
+            else if (record[first_lang_field]) { addLinks(record[first_lang_field]); }
+        } else if (first_lang.includes(current_language)) { addLinks(record[first_lang_field]); }
+
         {%- else -%}
+        
         if (second_lang.includes(current_language)){
-            if (record[{{ secondLangField | jsonify }}]) { 
-                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ secondLangField | jsonify }}] + "{% endif %}</dd>";
-            } else if (record[{{ firstLangField | jsonify }}]) {
-                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ firstLangField | jsonify }}] + "{% endif %}</dd>"; 
+            if (record[second_lang_field]) { 
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[second_lang_field] + "' target='_blank' rel='noopener'>" + record[second_lang_field] + "</a>{% else %}" + record[second_lang_field] + "{% endif %}</dd>";
+            } else if (record[first_lang_field]) {
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[first_lang_field] + "' target='_blank' rel='noopener'>" + record[first_lang_field] + "</a>{% else %}" + record[first_lang_field] + "{% endif %}</dd>"; 
             } 
         } else if (first_lang.includes(current_language)) {
-            if (record[{{ firstLangField | jsonify }}]) { fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ firstLangField | jsonify }}] + "{% endif %}</dd>"; }
+            if (record[first_lang_field]) { fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[first_lang_field] + "' target='_blank' rel='noopener'>" + record[first_lang_field] + "</a>{% else %}" + record[first_lang_field] + "{% endif %}</dd>"; }
         }
         {% endif %}{% endif %}{% endfor %}{% endfor %}
         fields += '</dl>';
