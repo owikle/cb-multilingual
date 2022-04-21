@@ -93,7 +93,6 @@ function pageInit(items) {
         }
         {% endfor %}{% endfor %}
     }
-    console.log(raw_terms);
     // split multivalued fields and clean up extra white space
     const re = /\s*;+\s*/;
     var clean_terms = raw_terms.join(";").toLowerCase().split(re);

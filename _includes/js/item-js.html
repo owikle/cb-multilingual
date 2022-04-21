@@ -1,16 +1,46 @@
-{%- assign config-metadata = site.data.config-metadata -%}
+{%- assign metadata-fields = site.data.config-metadata -%}
 {%- assign fields = site.data.grand-config-metadata -%}
 {%- assign stubs = site.data.config-nav | map: 'stub' | join: ';' -%}
+{%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
+{%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
+
 <script src="{{ '/assets/lib/lightgallery/js/lightgallery-all.min.js' | relative_url }}"></script>
 <script>
 (function(){
     /* add item data */
     var items = { 
         {%- for item in site.data[site.metadata] -%}
-        {{ item.objectid | jsonify }} : { {% unless fields contains 'title' %}"title": {{ item.title | jsonify }}, {% endunless %}{% for f in fields %}{% if item[f.field-eng] and item[f.field-spa] %}{{ f.field-id | append: '-display-name' | jsonify }}: { "eng":{{ f.display_name_eng | jsonify }},"spa":{{ f.display_name_spa | jsonify }} }, {{ f.field-id | append: '-value-' | append: item.objectid | jsonify }}: { "eng":{{ item[f.field-eng] | strip | jsonify }},"spa":{{ item[f.field-spa] | strip | jsonify }} }{% unless forloop.last %},{% endunless %}{% elsif item[f.field-eng] %}{{ f.field-id | append: '-display-name' | jsonify }}: { "eng":{{ f.display_name_eng | jsonify }},"spa":{{ f.display_name_spa | jsonify }} }, {{ f.field-id | append: '-value-' | append: item.objectid | jsonify }}: {{ item[f.field-eng] | strip | jsonify }}, {% endif %}{% endfor %} {% if item.youtubeid %} "youtube": {{ item.youtubeid | jsonify }}, {% endif %}{% if item.vimeoid %} "vimeo": {{ item.vimeoid | jsonify }}, {% endif %}"format": {{ item.format | jsonify }}, {% if  item.filename contains '/' %}"filename": "{{ item.filename }}" {% else %}"filename":{{ '/objects/' | relative_url | append: item.filename | jsonify }}{% endif %} }{% unless forloop.last %}, {% endunless %}
+        {{ item.objectid | jsonify }} : { {% unless fields contains 'title' %}"title": {{ item.title | jsonify }}, {% endunless %}
+        {%- for f in fields -%}
+        {%- assign firstLangField = f[firstLang] -%}
+        {%- assign secondLangField = f[secondLang] -%}
+        {%- for m in metadata-fields -%}
+        {%- if f.field-id == m.field-id -%}
+            {%- if item[firstLangField] and item[secondLangField] -%}
+            {{ firstLangField | jsonify }}:{{ item[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ item[secondLangField] | jsonify }}, 
+            {%- elsif item[firstLangField] and item[secondLangField] == nil -%}
+            {{ firstLangField | jsonify }}:{{ item[firstLangField] | jsonify }},
+            {%- endif -%}
+        {%- endif -%}{%- endfor -%}{%- endfor -%}{% if item.youtubeid %} "youtube": {{ item.youtubeid | jsonify }}, {% endif %}{% if item.vimeoid %} "vimeo": {{ item.vimeoid | jsonify }}, {% endif %}"format": {{ item.format | jsonify }}, {% if  item.filename contains '/' %}"filename": "{{ item.filename }}" {% else %}"filename":{{ '/objects/' | relative_url | append: item.filename | jsonify }}{% endif %} }{% unless forloop.last %}, {% endunless %}
         {% endfor %}
     };
-    console.log(items);
+
+    // figure out the current language
+    var current_language = ""; 
+    if (localStorage.getItem("lang")) { 
+      // get the value from local store
+      current_language = localStorage.getItem("lang");
+    } else { 
+      // set default value
+      current_language = "eng";
+      // set value in local store
+      localStorage.setItem("lang","eng");
+    }
+
+    // get first language and second language fields in grand-config-metadata
+    var first_lang = {{ firstLang | jsonify }};
+    var second_lang = {{ secondLang | jsonify }};
+
     /* get query id from URL */
     var queryString = window.location.search.substring(1).split("=")[1];
     var record = items[queryString];
@@ -86,32 +116,53 @@
 
         /* add item metadata */
         var fields = '<dl>';
-        {% for f in fields %}{% if f.browse_link == "true" %}
-        if (record[{{ f.field | jsonify }}]) {
-            var topics = record[{{ f.field | jsonify }}].split(';');
-            var browseLinks = "";
-            for (var i = 0, len = topics.length; i < len; i++) {
-                if (topics[i] != "") {
-                    browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
+        {% for m in metadata-fields %}{% for f in fields %}{% if f.field-id == m.field-id %}
+        {%- assign firstLangField = f[firstLang] -%}
+        {%- assign secondLangField = f[secondLang] -%}
+        {%- if m.browse_link == "true" -%}
+        if (second_lang.includes(current_language)) {
+            if (record[{{ secondLangField | jsonify }}]) {
+                var topics = record[{{ secondLangField | jsonify }}].split(';');
+                var browseLinks = "";
+                for (var i = 0, len = topics.length; i < len; i++) {
+                    if (topics[i] != "") {
+                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
+                    }
                 }
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
+            } else if (record[{{ firstLangField | jsonify }}]) {
+                var topics = record[{{ firstLangField | jsonify }}].split(';');
+                var browseLinks = "";
+                for (var i = 0, len = topics.length; i < len; i++) {
+                    if (topics[i] != "") {
+                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
+                    }
+                }
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
             }
-            fields += '<span class="{{ f.language }}"><dt class="field">{{ f.display_name }}:</dt> <dd class="field-value">' + browseLinks + '</dd></span>';
+        } else if (first_lang.includes(current_language)) {
+            if (record[{{ firstLangField | jsonify }}]) {
+                var topics = record[{{ firstLangField | jsonify }}].split(';');
+                var browseLinks = "";
+                for (var i = 0, len = topics.length; i < len; i++) {
+                    if (topics[i] != "") {
+                        browseLinks += '<a class="btn btn-link" href="{{ '/browse.html' | relative_url }}#' + encodeURIComponent(topics[i].trim()) + '">' + topics[i].trim() + '</a> ';
+                    }
+                }
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>" + browseLinks + "</dd>";
+            }
         }
         {%- else -%}
-        if (record[{{ f.field-id | append: '-display-name' | jsonify }}]){ 
-        // get data-translate value for the field
-        let dataTranslateValue = '{{ f.field-id | append: "-value-" }}' + recordName;
-        fields += '<dt class="field"><span data-translate="{{ f.field-id | append: "-display-name" }}" class="translate"></span>:</dt> <dd class="field-value">{% if f.external_link == "true" %}<a href="' + record[{{ f.field | jsonify }}] + '" target="_blank" rel="noopener">' + record[{{ f.field | jsonify }}] + '</a>{% else %}';
-            // make sure there are two keys, then add span data-translate
-            if(record[dataTranslateValue]["eng"]){
-                fields += '<span data-translate="' + dataTranslateValue + '" class="translate"</span>'; 
-            // no keys? just add the value
-            } else {
-                fields += record[dataTranslateValue];
-            }
+        if (second_lang.includes(current_language)){
+            if (record[{{ secondLangField | jsonify }}]) { 
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ secondLangField | jsonify }}] + "{% endif %}</dd>";
+            } else if (record[{{ firstLangField | jsonify }}]) {
+                fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ firstLangField | jsonify }}] + "{% endif %}</dd>"; 
+            } 
+        } else if (first_lang.includes(current_language)) {
+            if (record[{{ firstLangField | jsonify }}]) { fields += "<dt class='field'>{{ m.display_name }}:</dt> <dd class='field-value'>{% if m.external_link == 'true' %}<a href='" + record[{{ firstLangField | jsonify }}] + "' target='_blank' rel='noopener'>" + record[{{ firstLangField | jsonify }}] + "</a>{% else %}" + record[{{ firstLangField | jsonify }}] + "{% endif %}</dd>"; }
         }
-        fields += '{% endif %}</dd>';
-        {% endif %}{% endfor %}
+        {% endif %}{% endif %}{% endfor %}{% endfor %}
         fields += '</dl>';
         document.getElementById("item-metadata").innerHTML = fields;
 
@@ -165,6 +216,9 @@
 
 })();
 
-
+// reload page if language button is clicked
+$("input[name='lang_options']").change(function(){
+  window.location.reload();
+});
 
 </script>

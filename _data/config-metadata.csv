@@ -1,20 +1,15 @@
-field,language,display_name,browse_link,external_link
-title,eng,Title,
-title-es,spa,Título
-creator,,Creator,
-date,,Date Created,
-description-eng,eng,Description,
-description-es,spa,Descripción
-subject-eng,eng,Subjects,true
-subject-es,spa,Asignaturas,true
-location-eng,eng,Location
-location-es,spa,Ubicación
-latitude,,Latitude
-longitude,,Longitude
-source,,Source
-identifier,,Source Identifier,,
-type,,Type,
-format,,Format,
-rights-eng,eng,Rights,
-rights-es,spa,Derechos
-rightsstatement,,Rights Statement,,true
+field-id,display_name,browse_link,external_link
+title,<span data-translate='title-display-name' class='translate'></span>,
+creator,<span data-translate='creator-display-name' class='translate'></span>,
+date,<span data-translate='date-created-display-name' class='translate'></span>,
+description,<span data-translate='description-display-name' class='translate'></span>,
+subject,<span data-translate='subject-display-name' class='translate'></span>,true
+location,<span data-translate='location-display-name' class='translate'></span>
+latitude,<span data-translate='latitude-display-name' class='translate'></span>
+longitude,<span data-translate='longitude-display-name' class='translate'></span>
+source,<span data-translate='source-display-name' class='translate'></span>
+identifier,<span data-translate='identifier-display-name' class='translate'></span>,,
+type,<span data-translate='type-display-name' class='translate'></span>,
+format,<span data-translate='format-display-name' class='translate'></span>,
+rights,<span data-translate='rights-display-name' class='translate'></span>,
+rightsstatement,<span data-translate='rightsstatement-display-name' class='translate'></span>,,true
