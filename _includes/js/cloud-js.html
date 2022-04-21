@@ -82,15 +82,21 @@ function pageInit(items) {
         {%- for m in metadata-fields -%}
         {%- assign firstLangField = m[firstLang] -%}
         {%- assign secondLangField = m[secondLang] -%}
+
+        // define language keys
+        var first_lang_field = {{ firstLangField | jsonify }};
+        var second_lang_field = {{ secondLangField | jsonify }};
+
+        // add terms based on site language
+        var addTerms = field => raw_terms.push(items[i][field]);
+
         if (second_lang.includes(current_language)) {
-            if(items[i][{{ secondLangField | jsonify }}]) { 
-                raw_terms.push(items[i][{{ secondLangField | jsonify }}]); 
-            } else if(items[i][{{ firstLangField | jsonify }}]) {
-                raw_terms.push(items[i][{{ firstLangField | jsonify }}]); 
-            }
+            if(items[i][second_lang_field]) { addTerms(second_lang_field); } 
+            else if(items[i][first_lang_field]) { addTerms(first_lang_field); }
         } else if (first_lang.includes(current_language)) {
-            if(items[i][{{ firstLangField | jsonify }}]) { raw_terms.push(items[i][{{ firstLangField | jsonify }}]); }
+            if(items[i][first_lang_field]) { addTerms(first_lang_field); }
         }
+        
         {% endfor %}{% endfor %}
     }
     // split multivalued fields and clean up extra white space
