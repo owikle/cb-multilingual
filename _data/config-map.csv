@@ -1,4 +1,4 @@
-field,display_name,search
+field-id,display_name,search
 date,Date,true
 creator,Creator,true
 subject,Subjects,true
