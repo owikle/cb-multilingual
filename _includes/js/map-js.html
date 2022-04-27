@@ -155,11 +155,25 @@
         '" ><img class="mapthumb img-thumb" src="' +  thumbSrc + '" alt="item thumbnail"></a></div><p class="mt-1">';
 
         /* add metadata fields */
-        {% for f in fields %}{% if f.display_name %}
-        if (feature.properties[{{ f.field | jsonify }}]) {
-            popupTemplate += '<strong>{{ f.display_name }}:</strong> ' + feature.properties[{{ f.field | jsonify }}] + '<br>'; 
-        }
-        {% endif %}{% endfor %}
+        {% for m in map-fields %}
+        {%- assign chosen-field = fields | where_exp: 'c', 'c.field-id == m.field-id' -%}
+        {% if m.display_name %}
+        {% for c in chosen-field %}
+        {%- assign firstLangField = c[firstLang] -%}
+        {%- assign secondLangField = c[secondLang] -%}
+
+        if (second_lang.includes(current_language)){
+            if(feature.properties[{{ secondLangField | jsonify }}]) { 
+                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ secondLangField | jsonify }}] + "<br>"; 
+            } else if(feature.properties[{{ firstLangField | jsonify }}]) {
+                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ firstLangField | jsonify }}] + "<br>"; 
+            }
+        } else if (first_lang.includes(current_language)){
+            if(feature.properties[{{ firstLangField | jsonify }}]) { 
+                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ firstLangField | jsonify }}] + "<br>"; 
+            }
+        };
+        {% endfor %}{% endif %}{% endfor %}
         /* add object link button to popup */
         popupTemplate += '</p><div class="text-center"><a class="btn btn-light" href="' + itemHref + '" >View Item</a></div>';
         /* add object popup to map layer */

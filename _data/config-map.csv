@@ -1,5 +1,5 @@
 field-id,display_name,search
-date,Date,true
-creator,Creator,true
-subject,Subjects,true
-location,Location,true
+date,<span data-translate='date-created-display-name' class='translate'></span>,true
+creator,<span data-translate='creator-display-name' class='translate'></span>,true
+subject,<span data-translate='subject-display-name' class='translate'></span>,true
+location,<span data-translate='location-display-name' class='translate'></span>,true
