@@ -1,5 +1,5 @@
-field,display_name
-title,Title
-date,Date
-description,Description
-subject,Subjects
+field-id,display_name
+title,<span data-translate='title-display-name' class='translate'></span>
+date,<span data-translate='date-created-display-name' class='translate'></span>
+description,<span data-translate='description-display-name' class='translate'></span>
+subject,<span data-translate='subject-display-name' class='translate'></span>
