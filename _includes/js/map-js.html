@@ -1,5 +1,4 @@
 {%- assign items = site.data[site.metadata] | where_exp: 'item','item.latitude' -%}
-{%- assign fields = site.data.grand-config-metadata -%}
 {%- assign map-fields = site.data.config-map -%}
 
 {%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
@@ -19,24 +18,24 @@
     {% for item in items %}
     { "type":"Feature", "geometry":{ "type":"Point", "coordinates":[{{ item.longitude | strip }},{{ item.latitude | strip }}] }, "properties":
     {
-    {%- for f in fields -%}
+    {%- for f in site.data.grand-config-metadata -%}
     {%- assign firstLangField = f[firstLang] -%}
     {%- assign secondLangField = f[secondLang] -%}
-    {% if f.field-id == 'title' %}
+    {%- if f.field-id == 'title' -%}
       {%- if item[firstLangField] and item[secondLangField] -%}
       "title":{{ item[firstLangField] | strip | jsonify }}, {{ secondLangField | jsonify }}:{{ item[secondLangField] | strip | jsonify }},
       {%- elsif item[firstLangField] and item[secondLangField] == nil -%}
       "title":{{ item[firstLangField] | jsonify }}
       {%- endif -%}
-    {% endif %}
-    {% for m in map-fields %}
+    {%- endif -%}
+    {%- for m in map-fields -%}
     {%- if f.field-id == m.field-id -%}
         {%- if item[firstLangField] and item[secondLangField] -%}
         {{ firstLangField | jsonify }}:{{ item[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ item[secondLangField] | jsonify }}, 
         {%- elsif item[firstLangField] and item[secondLangField] == nil -%}
         {{ firstLangField | jsonify }}:{{ item[firstLangField] | jsonify }},
         {%- endif -%}
-    {%- endif -%}{% endfor %}{% endfor %}{% if item.youtubeid %} "youtube": {{ item.youtubeid | jsonify }}, {% endif %}
+    {% endif %}{% endfor %}{% endfor %}{% if item.youtubeid %} "youtube": {{ item.youtubeid | jsonify }}, {% endif %}
     "format": {{ item.format | jsonify }}, {% if  item.filename contains '/' %}"filename": "{{ item.filename }}" {% else %}"filename":{{ '/objects/' | relative_url | append: item.filename | jsonify }}{% endif %}, "id": {{ item.objectid | jsonify }} } }{% unless forloop.last %}, {% endunless %}{% endfor %}
     ]};
 
@@ -130,10 +129,10 @@
         var popupTemplate = '<h4><a class="text-dark" href="' + itemHref + '">';
 
         // get title in both languages
-        {% assign titleField = fields | where_exp: 'f', 'f.field-id == "title"' %}
-        {% for f in titleField %}
-        {%- assign firstLangField = f[firstLang] -%}
-        {%- assign secondLangField = f[secondLang] -%}
+        {% assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' %}
+        {%- for t in titleField -%}
+        {%- assign firstLangField = t[firstLang] -%}
+        {%- assign secondLangField = t[secondLang] -%}
 
         // define language keys
         var first_lang_field = {{ firstLangField | jsonify }};
@@ -142,6 +141,7 @@
         // add terms based on site language
         var addTitle = field => popupTemplate += feature.properties[field];
 
+        // check the site language and add the correct title values
         if (second_lang.includes(current_language)){
             if(feature.properties[second_lang_field]) { addTitle(second_lang_field); } 
             else if(feature.properties[first_lang_field]) { addTitle(first_lang_field); }
@@ -149,29 +149,36 @@
             if(feature.properties[first_lang_field]) { addTitle(first_lang_field); }
         };
 
-        {% endfor %}
+        {%- endfor -%}
 
+        // add thumbnail
         popupTemplate += '</a></h4><div class="text-center"><a href="' + itemHref + 
         '" ><img class="mapthumb img-thumb" src="' +  thumbSrc + '" alt="item thumbnail"></a></div><p class="mt-1">';
 
         /* add metadata fields */
-        {% for m in map-fields %}
-        {%- assign chosen-field = fields | where_exp: 'c', 'c.field-id == m.field-id' -%}
-        {% if m.display_name %}
-        {% for c in chosen-field %}
-        {%- assign firstLangField = c[firstLang] -%}
-        {%- assign secondLangField = c[secondLang] -%}
+        {%- for m in map-fields -%}
+        {%- assign fields = site.data.grand-config-metadata | where_exp: 'f', 'f.field-id == m.field-id' -%}
+        {%- if m.display_name -%}
+        {%- for f in fields -%}
+        {%- assign firstLangField = f[firstLang] -%}
+        {%- assign secondLangField = f[secondLang] -%}
 
+        // define language keys
+        var first_lang_field = {{ firstLangField | jsonify }};
+        var second_lang_field = {{ secondLangField | jsonify }};
+
+        // define field name
+        var field_name = {{ m.display_name | jsonify }};
+
+        // add value based on site language
+        var addValue = value => popupTemplate += `<strong>${field_name}:</strong> ${value}<br>`;
+
+        // check the site language and add the correct field values
         if (second_lang.includes(current_language)){
-            if(feature.properties[{{ secondLangField | jsonify }}]) { 
-                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ secondLangField | jsonify }}] + "<br>"; 
-            } else if(feature.properties[{{ firstLangField | jsonify }}]) {
-                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ firstLangField | jsonify }}] + "<br>"; 
-            }
+            if(feature.properties[second_lang_field]) { addValue(feature.properties[second_lang_field]); } 
+            else if(feature.properties[first_lang_field]) { addValue(feature.properties[first_lang_field]); }
         } else if (first_lang.includes(current_language)){
-            if(feature.properties[{{ firstLangField | jsonify }}]) { 
-                popupTemplate += "<strong>{{ m.display_name }}:</strong> " + feature.properties[{{ firstLangField | jsonify }}] + "<br>"; 
-            }
+            if(feature.properties[first_lang_field]) { addValue(feature.properties[first_lang_field]); }
         };
         {% endfor %}{% endif %}{% endfor %}
         /* add object link button to popup */
@@ -179,6 +186,7 @@
         /* add object popup to map layer */
         layer.bindPopup(popupTemplate);
     }
+
     /* function to add objects to map */
     function objectMarkers(feature,latlng) {
         var marker = L.marker(latlng);
@@ -206,8 +214,16 @@
 
 })();
 
+/*
+// fill translation spans
+document.querySelector('.leaflet-marker-icon').addEventListener("click", function() {
+    fillTranslationSpans();
+});
+*/
+
 // reload page if language button is clicked
 $("input[name='lang_options']").change(function(){
   window.location.reload();
 });
+
 </script>
