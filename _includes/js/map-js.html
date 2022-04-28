@@ -131,12 +131,10 @@
         // get title in both languages
         {% assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' %}
         {%- for t in titleField -%}
-        {%- assign firstLangField = t[firstLang] -%}
-        {%- assign secondLangField = t[secondLang] -%}
 
         // define language keys
-        var first_lang_field = {{ firstLangField | jsonify }};
-        var second_lang_field = {{ secondLangField | jsonify }};
+        var first_lang_field = {{ t[firstLang] | jsonify }};
+        var second_lang_field = {{ t[secondLang] | jsonify }};
 
         // add terms based on site language
         var addTitle = field => popupTemplate += feature.properties[field];
@@ -160,25 +158,23 @@
         {%- assign fields = site.data.grand-config-metadata | where_exp: 'f', 'f.field-id == m.field-id' -%}
         {%- if m.display_name -%}
         {%- for f in fields -%}
-        {%- assign firstLangField = f[firstLang] -%}
-        {%- assign secondLangField = f[secondLang] -%}
 
         // define language keys
-        var first_lang_field = {{ firstLangField | jsonify }};
-        var second_lang_field = {{ secondLangField | jsonify }};
+        var first_lang_field = {{ f[firstLang] | jsonify }};
+        var second_lang_field = {{ f[secondLang] | jsonify }};
 
         // define field name
         var field_name = {{ m.display_name | jsonify }};
 
         // add value based on site language
-        var addValue = value => popupTemplate += `<strong>${field_name}:</strong> ${value}<br>`;
+        var addValue = value => popupTemplate += '<strong>' + field_name + ':</strong> ' + feature.properties[value] + '<br>';
 
         // check the site language and add the correct field values
         if (second_lang.includes(current_language)){
-            if(feature.properties[second_lang_field]) { addValue(feature.properties[second_lang_field]); } 
-            else if(feature.properties[first_lang_field]) { addValue(feature.properties[first_lang_field]); }
+            if(feature.properties[second_lang_field]) { addValue(second_lang_field); } 
+            else if(feature.properties[first_lang_field]) { addValue(first_lang_field); }
         } else if (first_lang.includes(current_language)){
-            if(feature.properties[first_lang_field]) { addValue(feature.properties[first_lang_field]); }
+            if(feature.properties[first_lang_field]) { addValue(first_lang_field); }
         };
         {% endfor %}{% endif %}{% endfor %}
         /* add object link button to popup */
