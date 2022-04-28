@@ -122,19 +122,19 @@
         }
 
         // get first language and second language fields in grand-config-metadata
-        var first_lang = {{ firstLang | jsonify }};
-        var second_lang = {{ secondLang | jsonify }};
+        var first_lang = "{{ firstLang }}";
+        var second_lang = "{{ secondLang }}";
 
         /* create popup content */
         var popupTemplate = '<h4><a class="text-dark" href="' + itemHref + '">';
 
-        // get title in both languages
+        // get both title fields from grand-config-metadata
         {% assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' %}
         {%- for t in titleField -%}
 
         // define language keys
-        var first_lang_field = {{ t[firstLang] | jsonify }};
-        var second_lang_field = {{ t[secondLang] | jsonify }};
+        var first_lang_field = "{{ t[firstLang] }}";
+        var second_lang_field = "{{ t[secondLang] }}";
 
         // add terms based on site language
         var addTitle = field => popupTemplate += feature.properties[field];
@@ -160,11 +160,11 @@
         {%- for f in fields -%}
 
         // define language keys
-        var first_lang_field = {{ f[firstLang] | jsonify }};
-        var second_lang_field = {{ f[secondLang] | jsonify }};
+        var first_lang_field = "{{ f[firstLang] }}";
+        var second_lang_field = "{{ f[secondLang] }}";
 
         // define field name
-        var field_name = {{ m.display_name | jsonify }};
+        var field_name = "{{ m.display_name }}";
 
         // add value based on site language
         var addValue = value => popupTemplate += '<strong>' + field_name + ':</strong> ' + feature.properties[value] + '<br>';
