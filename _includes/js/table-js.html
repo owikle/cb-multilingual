@@ -1,11 +1,33 @@
 {% assign fcount = site.data.config-table | size %}
+{%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
+{%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
+
 <script type="text/javascript" language="javascript" src="{{ '/assets/lib/datatables/datatables.min.js' | relative_url }}"></script>
 <script>
+// figure out the current language
+var current_language = ""; 
+if (localStorage.getItem("lang")) { 
+    // get the value from local store
+    current_language = localStorage.getItem("lang");
+} else { 
+    // set default value
+    current_language = "eng";
+    // set value in local store
+    localStorage.setItem("lang","eng");
+}
+
+// get second language field name in grand-config-metadata
+let second_lang = "{{ secondLang }}";
+
+// figure out correct path to data
+let data_path = "";
+second_lang.includes(current_language) ? data_path = '{{ "/assets/js/metadata_second_lang.min.json" | relative_url }}' : data_path = '{{ "/assets/js/metadata.min.json" | relative_url }}';
+
 /* use jquery to initialize DataTables and load collection data */
 (function(){
     $('#item-table').DataTable( {
         // use DataTables ajax load to 
-        ajax: { url: '{{ "/assets/js/metadata.min.json" | relative_url }}', dataSrc: 'objects' },
+        ajax: { url: data_path, dataSrc: 'objects' },
         // defer render to speed up large sets
         "deferRender": true,
         // enable pagination 
@@ -28,4 +50,9 @@
         order: [[ 1, "asc" ]]
     });
 })();
+
+// reload page if language button is clicked
+$("input[name='lang_options']").change(function(){
+  window.location.reload();
+});
 </script>
