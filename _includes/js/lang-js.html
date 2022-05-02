@@ -77,8 +77,9 @@ if (localStorage.getItem("lang")) {
     localStorage.setItem("lang","eng");
 }
 
-// set button to checked
+// set button to checked and add focus
 document.querySelector("#" + site_language).checked = true;
+document.querySelector("#" + site_language).parentElement.classList.add("focus");
 
 // run function to fill translation spans after load
 fillTranslationSpans();
@@ -93,7 +94,8 @@ $("input[name='lang_options']").change(function(){
     fillTranslationSpans();
 });
 
-// set selected button to checked
+// set selected button to checked and add focus
 document.querySelector("#" + site_language).checked = true;
+document.querySelector("#" + site_language).parentElement.classList.add("focus");
 
 </script>
