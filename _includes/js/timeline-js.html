@@ -46,7 +46,7 @@ function makeCard(obj) {
     var second_lang = "{{ secondLang }}";
 
     // get both title fields from grand-config-metadata
-    {% assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' %}
+    {%- assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' -%}
     {%- for t in titleField -%}
 
     // define second language key
@@ -63,7 +63,7 @@ function makeCard(obj) {
         if(obj["title"]) { object_title = obj["title"]; }
     };
 
-    {% endfor %}
+    {%- endfor -%}
 
     // start card
     if (obj.format.includes("image")){

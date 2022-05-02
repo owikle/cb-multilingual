@@ -80,12 +80,10 @@ function pageInit(items) {
         {% for c in cloud-fields %}
         {% assign metadata-fields = site.data.grand-config-metadata | where_exp: 'm', 'm.field-id == c' %}
         {%- for m in metadata-fields -%}
-        {%- assign firstLangField = m[firstLang] -%}
-        {%- assign secondLangField = m[secondLang] -%}
 
         // define language keys
-        var first_lang_field = {{ firstLangField | jsonify }};
-        var second_lang_field = {{ secondLangField | jsonify }};
+        var first_lang_field = "{{ m[firstLang] }}";
+        var second_lang_field = "{{ m[secondLang] }}";
 
         // add terms based on site language
         var addTerms = field => raw_terms.push(items[i][field]);

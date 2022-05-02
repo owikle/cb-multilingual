@@ -39,38 +39,39 @@ function makeCard(obj) {
     }
 
     // get first language and second language fields in grand-config-metadata
-    var first_lang = {{ firstLang | jsonify }};
-    var second_lang = {{ secondLang | jsonify }};
+    var first_lang = "{{ firstLang }}";
+    var second_lang = "{{ secondLang }}";
+
+    // get both title fields from grand-config-metadata
+    {%- assign titleField = fields | where_exp: 'f', 'f.field-id == "title"' -%}
+    {%- for f in titleField -%}
+
+    // define second language key
+    var second_lang_field = "{{ f[secondLang] }}";
+
+    // add title value based on site language
+    var object_title = "";
+
+    // check the site language and add the correct title value
+    if (second_lang.includes(current_language)){
+      if(obj[second_lang_field]){ object_title = obj[second_lang_field]; }
+      else if(obj["title"]) { object_title = obj["title"]; }
+    } else if (first_lang.includes(current_language)){
+      if(obj["title"]) { object_title = obj["title"]; }
+    };
+
+    {%- endfor -%}
 
     // start card
     var card = '<div class="item col-lg-4 col-md-6 col-sm-12 mb-2"><div class="card">';
+
     // top image for photos
     if(imgSrc) {
-      card += '<a href="' + itemHref + '"> <img class="card-img-top lazyload" data-src="' + imgSrc + '" alt="Image of ' + obj.title + '"></a>';
+      card += '<a href="' + itemHref + '"> <img class="card-img-top lazyload" data-src="' + imgSrc + '" alt="Image of ' + object_title + '"></a>';
     }
+
     // title
-    card += '<div class="card-body text-center"> <h4 class="card-title"><a href="' + itemHref + '" class="text-dark">';
-
-    // get title in both languages
-    {% assign titleField = fields | where_exp: 'f', 'f.field-id == "title"' %}
-    {% for f in titleField %}
-    {%- assign firstLangField = f[firstLang] -%}
-    {%- assign secondLangField = f[secondLang] -%}
-
-    if (second_lang.includes(current_language)){
-      if(obj[{{ secondLangField | jsonify }}]){
-        card += obj[{{ secondLangField | jsonify }}];
-      } else {
-        card += obj[{{ firstLangField | jsonify }}];
-      }
-    } else if (first_lang.includes(current_language)){
-      card += obj[{{ firstLangField | jsonify }}];
-    };
-
-    {% endfor %}
-
-    // add last of title code to the card
-    card += '</a></h4>';
+    card += '<div class="card-body text-center"><h4 class="card-title"><a href="' + itemHref +'" class="text-dark">' + object_title + '</a></h4>';
 
     // thumb for non-photo items
     if(thumbSrc){
@@ -80,12 +81,10 @@ function makeCard(obj) {
     card += '<p class="card-text">';
 
     {% for f in fields %}{% for b in browse-fields %}{% unless b.hidden == 'true' %}
-    {%- assign firstLangField = f[firstLang] -%}
-    {%- assign secondLangField = f[secondLang] -%}
     {%- if f.field-id == b.field-id -%}
 
-    var first_lang_field = {{ firstLangField | jsonify }};
-    var second_lang_field = {{ secondLangField | jsonify }};
+    var first_lang_field = "{{ f[firstLang] }}";
+    var second_lang_field = "{{ f[secondLang] }}";
 
     //function addContent(field_name){
 
