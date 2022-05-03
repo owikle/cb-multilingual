@@ -5,16 +5,6 @@
 
 <script>
 
-// set up translations dictionary for site language (from config-translation)
-var translations = { 
-    {% for t in site.data.config-translation %}
-    "{{ t.data_translate }}": { 
-        {% for l in site.site_languages %}
-        "{{ l.lang_id }}": "{{ t[l.lang_id] }}"{% unless forloop.last %},{% endunless %}{% endfor %}
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-}
-
 // set up translations dictionary for metadata field names (from grand-config-metadata)
 var translationFieldNames = {
     {% for f in fields %}
@@ -25,9 +15,6 @@ var translationFieldNames = {
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
 }
-
-// find number of languages specified in _config.yml
-var langArraySize = {{ site.site_languages | size }};
 
 // set up translations dictionary for metadata values (from grand-config-metadata)
 var translationValues = {
@@ -44,6 +31,16 @@ var translationValues = {
     {% elsif i[firstLangField] and i[secondLangField] == nil %}
     {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: {{ i[firstLangField] | strip | jsonify }},{% endif %}
     {% endfor %}{%- endfor -%}
+}
+
+// set up translations dictionary for site language (from config-translation)
+var translations = { 
+    {% for t in site.data.config-translation %}
+    "{{ t.data_translate }}": { 
+        {% for l in site.site_languages %}
+        "{{ l.lang_id }}": "{{ t[l.lang_id] }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
 }
 
 // combine all dictionaries into one
@@ -77,11 +74,20 @@ if (localStorage.getItem("lang")) {
     localStorage.setItem("lang","eng");
 }
 
-// set button to checked and add focus
-document.querySelector("#" + site_language).checked = true;
-document.querySelector("#" + site_language).parentElement.classList.add("focus");
+// function to update the button color when clicked
+function changeButtonColor(){
+    document.querySelectorAll("input[name='lang_options']").forEach(node => {
+        if (node.value === site_language){
+            node.parentElement.classList.add("btn-active", "focus");
+            node.checked = true; 
+        } else { node.parentElement.classList.remove("btn-active", "focus"); }
+    });
+}
 
-// run function to fill translation spans after load
+// update language button color
+changeButtonColor();
+
+// fill translation spans after load
 fillTranslationSpans();
 
 // radio button selects language
@@ -90,12 +96,10 @@ $("input[name='lang_options']").change(function(){
     site_language = this.value;
     // store the new selected language
     localStorage.setItem("lang", site_language);
-    // run function to fill translation spans
+    // update language button color
+    changeButtonColor();
+    // fill translation spans
     fillTranslationSpans();
 });
-
-// set selected button to checked and add focus
-document.querySelector("#" + site_language).checked = true;
-document.querySelector("#" + site_language).parentElement.classList.add("focus");
 
 </script>
