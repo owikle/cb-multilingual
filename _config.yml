@@ -41,7 +41,16 @@ site_languages:
 #
 # Set the metadata for your collection (the name of the csv file in your _data directory that describes the objects in your collection) 
 # Use the filename of your CSV **without** the ".csv" extension! E.g. _data/demo-metadata.csv --> "demo-metadata"
-metadata: histhea 
+metadata: histhea
+
+##########
+# Site/Organization Branding 
+#   Uncomment these and enter information for your organization (replacing the CDIL links and name below) if you'd like to brand your site with a logo
+#
+organization-name: "Arte Público Press"
+organization-link: https://artepublicopress.com/
+organization-logo-banner: /assets/img/APP_Logo_2019.png
+organization-logo-nav: /assets/img/app_logo_white_sm.png
 
 ##########
 # GOOGLE SERVICES [optional!]
