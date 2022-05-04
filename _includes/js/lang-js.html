@@ -78,9 +78,9 @@ if (localStorage.getItem("lang")) {
 function changeButtonColor(){
     document.querySelectorAll("input[name='lang_options']").forEach(node => {
         if (node.value === site_language){
-            node.parentElement.classList.add("btn-active", "focus");
+            node.parentElement.classList.add("btn-active", "focus", "text-white");
             node.checked = true; 
-        } else { node.parentElement.classList.remove("btn-active", "focus"); }
+        } else { node.parentElement.classList.remove("btn-active", "focus", "text-white"); }
     });
 }
 
