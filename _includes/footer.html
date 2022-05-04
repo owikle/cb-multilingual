@@ -2,7 +2,7 @@
 
     <div class="row align-items-center border-bottom border-white pb-4 mb-2">
 
-        <div class="col-md-8 mt-2">
+        <div class="col-md-7 mt-2">
 
             <h4><a href="{{ '/' | relative_url }}" class="text-white font-weight-normal"><span data-translate="site-title" class="translate"></span></a></h4>
             <p class="text-white"><small><span data-translate="site-description" class="translate"></span></small></p>
@@ -24,7 +24,14 @@
 
         </div>
 
-        <div class="col-md-4 mt-2 text-right">
+        <div class="col-md-5 mt-2 text-right">
+
+            {% if site.organization-logo-nav %} <p class="text-right">
+                <a href="{{ site.organization-link }}" target="_blank" rel="noopener">
+                    <img id="footer-logo" class="img-fluid" src="{{ site.organization-logo-nav | relative_url }}" alt="{{ site.organization-name }} home">
+                </a>
+            </p>
+            {% endif %}
             <p class="text-white" id="footer-credits">
                 <small><em><span data-translate="home-built" class="translate"></span></em>
                     <a href="https://collectionbuilder.github.io/" target="_blank" rel="noopener" title="CollectionBuilder">

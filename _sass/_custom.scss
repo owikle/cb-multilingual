@@ -10,3 +10,18 @@
 .spa {
     display: none;
 }
+
+// language button styling
+.lang-buttons {
+    background: white;
+}
+.btn-active {
+    background-color:rgba(0, 0, 0, 0.151);
+}
+.btn.focus {
+    box-shadow: 0 0 0 0.2rem rgba(6, 48, 2, 0.25);
+}
+.banner-buttons {
+    position: absolute;
+    z-index: 9;
+}

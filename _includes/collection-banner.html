@@ -5,15 +5,6 @@
     background-color: rgba(37, 36, 36, 0.72);
     color: white !important;
 }
-.lang-buttons {
-    background: white;
-}
-.btn-active {
-    background-color:rgba(0, 0, 0, 0.151);
-}
-.btn.focus {
-    box-shadow: 0 0 0 0.2rem rgba(6, 48, 2, 0.25);
-}
 .featured-link {
     background:rgba(0,0,0,.5);
 }
@@ -38,9 +29,21 @@
 }
 </style>
 <div id="home-banner" class="container-fluid mb-0 p-0">
-    {% include language-button.html %}
+    <div class="text-right">
+        <div class="btn-group btn-group-toggle p-4 lang-buttons border rounded" data-toggle="buttons">
+            <label class="btn border">
+                <input type="radio" name="lang_options" id="eng" value="eng" autocomplete="off"> English
+            </label>
+            <label class="btn border">
+                <input type="radio" name="lang_options" id="spa" value="spa" autocomplete="off"> Español
+            </label>
+        </div>
+    </div>
     <div id="home-title-box" >
         <div class="title-card p-2 text-center">
+            {% if site.organization-logo-nav %}<a class="d-none d-md-block" href="{{ site.organization-link }}" target="_blank" rel="noopener">
+                <img id="home-banner-logo" src="{{ site.organization-logo-nav | relative_url }}" alt="{{ site.organization-name }} home" >
+            </a>{% endif %}
             <h1 class="display-4"><span data-translate='site-title' class='translate'></span></h1>
             {% if site.tagline %}<p class="mb-0"><span data-translate='site-tagline' class='translate'></span></p>{% endif %}
         </div>
@@ -50,22 +53,29 @@
     </div>{% endunless %}
 </div>
 {%- else -%}
-<div class="container pt-2" style="position:relative;">
-    <div class="row">
-        <div class="col-md-10">
+<div class="d-flex justify-content-end">
+    <div class="btn-group btn-group-toggle p-4 lang-buttons border rounded banner-buttons" data-toggle="buttons">
+        <label class="btn border">
+            <input type="radio" name="lang_options" id="eng" value="eng" autocomplete="off"> English
+        </label>
+        <label class="btn border">
+            <input type="radio" name="lang_options" id="spa" value="spa" autocomplete="off"> Español
+        </label>
+    </div>
+</div>
+<div class="container">
+    <div class="row align-items-center">
+        <div id="title" class="{% if site.organization-logo-banner %}col-md-9{% else %}col-12{% endif %}">
             <h1><a class="text-dark font-weight-normal" href="{{ site.baseurl }}/" ><span data-translate='site-title' class='translate'></span></a></h1>	 
             {% if site.tagline %}<p><span data-translate='site-tagline' class='translate'></span></p>{% endif %}
         </div>
-        <div class="col-md-2 text-right">
-            <div class="btn-group btn-group-toggle pt-4" data-toggle="buttons">
-                <label class="btn btn-info btn-lg">
-                    <input type="radio" name="lang_options" id="eng" value="eng" autocomplete="off"> English
-                </label>
-                <label class="btn btn-info btn-lg">
-                    <input type="radio" name="lang_options" id="spa" value="spa" autocomplete="off"> Español
-                </label>
-            </div>
+        {% if site.organization-logo-banner %}
+        <div class="col-md-3 d-none d-lg-block text-right">
+            <a class="btn btn-outline-light" href="{{ site.organization-link }}" target="_blank" rel="noopener">
+                <img class="img-fluid" src="{{ site.organization-logo-banner | relative_url }}" title="{{ site.organization-name }}" alt="{{ site.organization-name }} home" >
+            </a>
         </div>
+        {% endif %}
     </div>
 </div>
 {%- endif -%}
