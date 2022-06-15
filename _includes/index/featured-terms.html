@@ -18,36 +18,138 @@
 
 {%- endcomment -%}
 
-{%- if include.featured -%}
-{% assign topTerms = include.featured | split: ";" %}
-{%- else -%}
+{%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
+{%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
+{%- assign items = site.data[site.metadata] -%}
+{%- assign fields = include.field | default: "subject" -%}
+{%- assign cloud-fields = fields | split: ";" -%}
 
-{% comment %} 
-    Use termsField and termsMax to customize feature 
-{% endcomment %}
-{% assign termsField = include.field | default: "subject" %}
-{% assign termsMax = include.max | default: 5 %}
-
-{% comment %} 
-    Liquid below cleans and counts unique terms 
-{% endcomment %}
-{% assign rawTerms = site.data[site.metadata] | map: termsField | join: ";" | split: ";" %}
-{% capture terms %}{% for t in rawTerms %}{% if t != "" and t != " " %}{{ t | strip | downcase }};{% endif %}{% endfor %}{% endcapture %}
-{% assign terms = terms | split: ";" %}
-{% assign uniqueTerms = terms | uniq | sort %}
-{% capture termsCount %}{% for unique in uniqueTerms %}{% assign count = terms | where_exp: 'item', 'item == unique' | size %}{{ count | prepend: '0000' | slice: -4, 4 }}||{{ unique | capitalize }}{% unless forloop.last %};{% endunless %}{% endfor %}{% endcapture %}
-{% assign termsCount = termsCount | split: ";" | sort | reverse %}
-{% capture topTerms %}
-{% for i in termsCount limit: termsMax %}{{ i | split: "||" | last }};{% endfor %}{% endcapture %}
-{% assign topTerms = topTerms | split: ";" %}
-{%- endif -%}
+{% capture functionName %}featured_terms_{{ include.field | default: include.featured | slugify | replace: "-","_" }}{% endcapture %}
 <div class="card mb-3">
     {% if include.header %}<h5 class="card-header">{{ include.header }}</h5>{% endif %}
     <div class="card-body">
         {% if include.title %}<h5 class="card-title">{{ include.title }}</h5>{% endif %}
         <p class="card-text">
-            {% for s in topTerms %}
-            <a class="btn btn-sm btn-{{ include.btn-color | default: 'info' }} m-1" href="{{ s | strip | url_param_escape | prepend: '/browse.html#' | relative_url }}">{{ s | strip }}</a>{% endfor %}
+            <div id="card-{{ cloud-fields | slufigy }}"></div>
         </p>
     </div>
 </div>
+
+<script>
+    // figure out the current site language
+    var current_language = ""; objects{{ }}
+    if (localStorage.getItem("lang")) { 
+        // get the value from local store
+        current_language = localStorage.getItem("lang");
+    } else { 
+        // set default value
+        current_language = "eng";
+        // set value in local store
+        localStorage.setItem("lang","eng");
+    }
+
+    // set up first language and second language field names in grand-config-metadata
+    var first_lang = {{ firstLang | jsonify }};
+    var second_lang = {{ secondLang | jsonify }};
+
+    // set up feature function as variable
+    function pageInit(items) { 
+        {% if include.featured %}
+        // featured terms
+        var raw_terms = "{{ include.featured }}".split(";");
+        {% else %}
+        // get cloud fields from metadata
+        var raw_terms = [];
+        for (var i = 0; i < items.length; i++) {
+            {% for c in cloud-fields %}
+            {% assign metadata-fields = site.data.grand-config-metadata | where_exp: 'm', 'm.field-id == c' %}
+            {%- for m in metadata-fields -%}
+
+            // define language keys
+            var first_lang_field = "{{ m[firstLang] }}";
+            var second_lang_field = "{{ m[secondLang] }}";
+
+            console.log(first_lang_field);
+
+            // add terms based on site language
+            var addTerms = field => raw_terms.push(items[i][field]);
+
+            if (second_lang.includes(current_language)) {
+                if(items[i][second_lang_field]) { addTerms(second_lang_field); } 
+                else if(items[i][first_lang_field]) { addTerms(first_lang_field); }
+            } else if (first_lang.includes(current_language)) {
+                if(items[i][first_lang_field]) { addTerms(first_lang_field); }
+            }
+
+            {% endfor %}{% endfor %}
+
+        }
+        {% endif %}
+        // split multivalued fields and clean up extra white space
+        const re = /\s*;+\s*/;
+        var clean_terms = raw_terms.join(";").toLowerCase().split(re);
+        // find unique terms
+        var unique_terms = clean_terms.filter(function(value, index, self) { return self.indexOf(value) === index; });
+        // count unique values 
+        var terms = [];
+        for (var i = 0; i < unique_terms.length; i++) {
+            var count = clean_terms.filter(function(t) { return t == unique_terms[i] }).length;
+            terms.push([unique_terms[i],count]);
+        }
+        {% if stopwords %}/* apply stopwords */
+        var stopWords = {{ stopwords | downcase | split: ';' | jsonify }};
+        terms = terms.filter(function(a) { return stopWords.indexOf(a[0]) < 0;});{% endif %}
+        // sort by count
+        terms.sort(function(a, b){ return b[1] - a[1] });
+        
+        {% if include.max %}
+        // set size
+        if (terms.length > {{ include.max }}) {
+            var cloud_size = {{ include.max }};
+        } else {
+            var cloud_size = terms.length;
+        }
+        {% else %}
+        var cloud_size = 5;
+        {% endif %}
+        //
+        // get div
+        var cloud = document.getElementById("card-{{ cloud-fields | slufigy }}");
+        // create each term link
+        var cloud_items = "";
+        for (i = 0; i < cloud_size; i++) {
+            cloud_items += '<a class="btn btn-{{ include.btn-color | default: "info" }} m-1" href="{{ "/browse.html" | relative_url }}#' + encodeURIComponent(terms[i][0]) + '" >' + terms[i][0] + '</a>';
+        }
+        // add to card div
+        cloud.innerHTML = cloud_items;
+
+    };
+
+    /* add items */
+    var objects = [
+    {% for i in items %}
+        {
+            {%- for f in site.data.grand-config-metadata %}
+            {%- assign firstLangField = f[firstLang] -%}
+            {%- assign secondLangField = f[secondLang] -%}
+            {%- for c in cloud-fields -%}
+            {%- if c == f.field-id -%}
+                {%- if i[firstLangField] and i[secondLangField] -%}
+                {{ firstLangField | jsonify }}:{{ i[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ i[secondLangField] | jsonify }}, 
+                {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
+                {{ firstLangField | jsonify }}:{{ i[firstLangField] | jsonify }},
+                {%- endif -%}
+            {%- endif -%}
+            {%- endfor -%}
+            {%- endfor -%}
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ];
+
+    pageInit(objects);
+
+    // reload page if language button is clicked
+    $("input[name='lang_options']").change(function(){
+    window.location.reload();
+    });
+</script>
