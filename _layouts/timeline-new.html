@@ -1,0 +1,183 @@
+{%- assign firstLang = site.site_languages[0].lang_id | prepend: 'field-' -%}
+{%- assign secondLang = site.site_languages[1].lang_id | prepend: 'field-' -%}
+
+<script>
+  
+function makeCard(obj) {
+    // find images and link
+    // find item link
+    var itemHref = `{{ '/item.html' | relative_url }}?id=${obj.objectid}`;
+    // find images
+    var thumbSrc;
+    // add images or thumb for objects based on format
+    if(obj.youtube) {
+        thumbSrc = 'https://img.youtube.com/vi/' + obj.youtube + '/hqdefault.jpg';
+    } else if (obj.format.includes("image")) {
+        if(obj.filename.includes("/")) { thumbSrc = obj.filename; } else { thumbSrc = "{{ '/objects/' | relative_url }}" + obj.filename; }
+    } else if (obj.format.includes("audio")) {
+        thumbSrc = '{{ "/assets/img/audio.svg" | relative_url }}';
+    } else if (obj.format.includes("video")) {
+        thumbSrc = '{{ "/assets/img/video.svg" | relative_url }}';  
+    } else if (obj.format.includes("pdf")) {
+        thumbSrc = '{{ "/assets/img/pdf.svg" | relative_url }}';
+    } else {
+        thumbSrc = '{{ "/assets/img/file.svg" | relative_url }}';
+    }  
+
+    // figure out the current language
+    var current_language = ""; 
+    if (localStorage.getItem("lang")) { 
+        // get the value from local store
+        current_language = localStorage.getItem("lang");
+    } else { 
+        // set default value
+        current_language = "eng";
+        // set value in local store
+        localStorage.setItem("lang","eng");
+    }
+    
+    // get first language and second language fields in grand-config-metadata
+    var first_lang = "{{ firstLang }}";
+    var second_lang = "{{ secondLang }}";
+
+    // get both title fields from grand-config-metadata
+    {%- assign titleField = site.data.grand-config-metadata | where_exp: 't', 't.field-id == "title"' -%}
+    {%- for t in titleField -%}
+
+    // define second language key
+    var second_lang_field = "{{ t[secondLang] }}";
+
+    // add title value based on site language
+    var object_title = "";
+
+    // check the site language and add the correct title value
+    if (second_lang.includes(current_language)){
+        if(obj[second_lang_field]) { object_title = obj[second_lang_field]; } 
+        else if(obj["title"]) { object_title = obj["title"]; }
+    } else if (first_lang.includes(current_language)){
+        if(obj["title"]) { object_title = obj["title"]; }
+    };
+
+    {%- endfor -%}
+
+    // create card based on type
+    if (obj.youtubeid || obj.format.includes("image")){
+        var card = `<div class="col-lg-4 col-md-6">
+            <a href="${itemHref}">
+                <img class="lazyload img-thumbnail" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3C/svg%3E" data-src="${thumbSrc}" alt="${object_title}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="${object_title} | ${obj.date}">
+            </a>
+            </div>`;
+    }
+    else {
+        var card = `<div class="col-lg-4 col-md-6">
+            <a href="${itemHref}">
+                <div class="card"> 
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-dark">${object_title}</h4>
+                        <img class="lazyload w-50" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3C/svg%3E" data-src="${thumbSrc}" alt="filetype thumbnail">
+                    </div>
+                </div>
+            </a>
+            </div>`;
+    }
+    return card;
+}
+
+function pageInit(items) {
+    // get dates from metadata and clean to years
+    clean_years = [];
+    for (var i = 0; i < items.length; i++) {
+        if(items[i].date) { 
+            if(items[i].date.includes("-")) {
+                clean_years.push(items[i].date.trim().split("-")[0]);
+            } else if (items[i].date.includes("/")) {
+                clean_years.push(items[i].date.trim().split("/").reverse()[0]);
+            } else {
+                clean_years.push(items[i].date.trim());
+            }
+        }
+    }
+    // find unique years 
+    unique_years = clean_years.filter(function(value, index, self) { return self.indexOf(value) === index; }).sort((a, b) => a - b);
+
+    document.getElementById("yearRange").innerHTML = `<a href="#y${ unique_years[0] }">${ unique_years[0] }</a> to <a href="#y${ unique_years[unique_years.length - 1] }">${ unique_years[unique_years.length - 1] }</a>`;
+
+    // figure out navYears 
+    var dropYears = "";
+    {%- if site.data.theme.year-navigation -%}
+    var navYears = {{ site.data.theme.year-navigation | split: ";" | jsonify }};
+    {%- else -%}
+    const everyNth = (arr, nth) => arr.filter((e, i) => i % nth === nth - 1);
+    if (unique_years.length < 20){
+        var navYears = everyNth(unique_years, 2);
+    }
+    else {
+        var navYears = everyNth(unique_years, 5);
+    }
+    {% endif %}
+    for (var i = 0; i < navYears.length; i++){
+        dropYears += '<a class="dropdown-item" href="#' + navYears[i] + '">' + navYears[i] + '</a>';
+    }
+    // add nav years dropdown
+    document.getElementById("navDropYears").innerHTML = dropYears;
+    
+    // add navYears to page
+    var yearTable = "";
+    // iterate over unique years 
+    for (var i = 0; i < unique_years.length; i++) {
+        var years = "";
+        var yearItems = items.filter(item => item.date && item.date.includes(unique_years[i]));
+        // create cards for each
+        var yearItemCards = "";
+        yearItems.forEach((item) => { yearItemCards += makeCard(item); });
+        // create table row for year
+        var yearRow = `<tr id="y${unique_years[i]}"><th><h3>${unique_years[i]}</h3></th><td><div class="row">${yearItemCards}</div></td></tr>`;
+        // add to var
+        yearTable += yearRow;
+    }
+    document.getElementById("timelineBody").innerHTML = yearTable;
+
+    // init bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // highlight year if hash
+    if(window.location.hash) {
+        var hashfilter = decodeURIComponent(location.hash.substr(1));
+        document.querySelector("tr#" + hashfilter).classList.add("bg-info");
+    }
+}
+
+{% assign items = site.data[site.metadata] %}
+
+var objects = [
+    {% for i in items %}
+    { "objectid":{{ i.objectid | jsonify }}, "format":{% if i.format %}{{ i.format | jsonify }}{% else %}""{% endif %},
+    {%- for f in site.data.grand-config-metadata -%}
+    {%- assign firstLangField = f[firstLang] -%}
+    {%- assign secondLangField = f[secondLang] -%}
+    {% if f.field-id == 'title' %}
+        {%- if i[firstLangField] and i[secondLangField] -%}
+        "title":{{ i[firstLangField] | strip | jsonify }}, {{ secondLangField | jsonify }}:{{ i[secondLangField] | strip | jsonify }},
+        {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
+        "title":{{ i[firstLangField] | strip | jsonify }}
+        {%- endif -%}
+    {% elsif f.field-id == 'date' %}
+        {%- if i[firstLangField] and i[secondLangField] -%}
+        "date":{{ i[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ i[secondLangField] | jsonify }}, 
+        {%- elsif i[firstLangField] and i[secondLangField] == nil -%}
+        "date":{{ i[firstLangField] | jsonify }},
+        {%- endif -%}
+    {% endif %}{% endfor %}{% if i.youtubeid %} "youtube": {{ i.youtubeid | jsonify }}, {% endif %}{% if  i.filename contains '/' %}"filename": "{{ i.filename }}" {% else %}"filename":"{{ '/objects/' | relative_url | append: i.filename }}"{% endif %} }{% unless forloop.last %},{% endunless %}{% endfor %}
+];
+
+pageInit(objects);
+
+// reload page if language button is clicked
+$("input[name='lang_options']").change(function(){
+  window.location.reload();
+});
+
+</script>
