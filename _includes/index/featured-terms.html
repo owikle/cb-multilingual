@@ -24,36 +24,38 @@
 {%- assign fields = include.field | default: "subject" -%}
 {%- assign cloud-fields = fields | split: ";" -%}
 
-{% capture functionName %}featured_terms_{{ include.field | default: include.featured | slugify | replace: "-","_" }}{% endcapture %}
 <div class="card mb-3">
     {% if include.header %}<h5 class="card-header">{{ include.header }}</h5>{% endif %}
     <div class="card-body">
         {% if include.title %}<h5 class="card-title">{{ include.title }}</h5>{% endif %}
         <p class="card-text">
-            <div id="card-{{ cloud-fields | slufigy }}"></div>
+            <div id="card-{{ cloud-fields }}"></div>
         </p>
     </div>
 </div>
 
-<script>
-    // figure out the current site language
-    var current_language = ""; objects{{ }}
-    if (localStorage.getItem("lang")) { 
-        // get the value from local store
-        current_language = localStorage.getItem("lang");
-    } else { 
-        // set default value
-        current_language = "eng";
-        // set value in local store
-        localStorage.setItem("lang","eng");
-    }
+<script src="{{ '/assets/lib/jquery-3.6.0.min.js' | relative_url }}"></script>
 
-    // set up first language and second language field names in grand-config-metadata
-    var first_lang = {{ firstLang | jsonify }};
-    var second_lang = {{ secondLang | jsonify }};
+<script>
 
     // set up feature function as variable
     function pageInit(items) { 
+        // figure out the current site language
+        var current_language = "";
+        if (localStorage.getItem("lang")) { 
+            // get the value from local store
+            current_language = localStorage.getItem("lang");
+        } else { 
+            // set default value
+            current_language = "eng";
+            // set value in local store
+            localStorage.setItem("lang","eng");
+        }
+        console.log(current_language);
+        // set up first language and second language field names in grand-config-metadata
+        var first_lang = {{ firstLang | jsonify }};
+        var second_lang = {{ secondLang | jsonify }};
+
         {% if include.featured %}
         // featured terms
         var raw_terms = "{{ include.featured }}".split(";");
@@ -114,7 +116,7 @@
         {% endif %}
         //
         // get div
-        var cloud = document.getElementById("card-{{ cloud-fields | slufigy }}");
+        var cloud = document.getElementById("card-{{ cloud-fields }}");
         // create each term link
         var cloud_items = "";
         for (i = 0; i < cloud_size; i++) {
@@ -149,7 +151,9 @@
     pageInit(objects);
 
     // reload page if language button is clicked
+    // document.querySelector("input[name='lang_options']").addEventListener('change',function(){
+
     $("input[name='lang_options']").change(function(){
-    window.location.reload();
+        window.location.reload();
     });
 </script>
