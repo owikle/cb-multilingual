@@ -6,6 +6,7 @@
 <script>
 
 // set up translations dictionary for metadata field names (from grand-config-metadata)
+/*
 var translationFieldNames = {
     {% for f in fields %}
     {{ f.field-id | append: '-display-name' | jsonify }}: { 
@@ -14,9 +15,10 @@ var translationFieldNames = {
         "{{ l.lang_id }}": {{ f[display] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor %}
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
-}
+}*/
 
 // set up translations dictionary for metadata values (from grand-config-metadata)
+/*
 var translationValues = {
     {%- for i in items -%}{%- for f in fields -%}
     {%- assign firstLangField = f[firstLang] -%}
@@ -32,6 +34,7 @@ var translationValues = {
     {{ f.field-id | append: '-value-' | append: i.objectid | jsonify }}: {{ i[firstLangField] | strip | jsonify }},{% endif %}
     {% endfor %}{%- endfor -%}
 }
+*/
 
 // set up translations dictionary for site language (from config-translation)
 var translations = { 
@@ -46,7 +49,7 @@ var translations = {
 // combine all dictionaries into one
 const allTranslations = {};
 
-$.extend(allTranslations, translations, translationFieldNames, translationValues);
+$.extend(allTranslations, translations);
 //console.log(allTranslations);
 
 // function to set all translated spans

@@ -1,15 +1,15 @@
-field-id,field-eng,field-spa,display_name_eng,display_name_spa
-title,title,title-es,Title,Título
-creator,creator,,Creator,Creador
-date,date,,Date,Fecha
-description,description-eng,description-es,Description,Descripción
-subject,subject-eng,subject-es,Subject,Sujeto
-location,location-eng,location-es,Location,Ubicación
-latitude,latitude,,Latitude,Latitud
-longitude,longitude,,Longitude,Longitud
-source,source,,Source,Origen
-identifier,identifier,,Source Identifier,Identificador de origen
-type,type,,Type,Tipo
-format,format,,Format,Formato
-rights,rights-eng,rights-es,Rights,Derechos
-rightsstatement,rightsstatement,,Rights Statement,Declaración de derechos
+field-id,field-eng,field-spa
+title,title,title-es
+creator,creator,
+date,date,
+description,description-eng,description-es
+subject,subject-eng,subject-es
+location,location-eng,location-es
+latitude,latitude,
+longitude,longitude,
+source,source,
+identifier,identifier,
+type,type,
+format,format,
+rights,rights-eng,rights-es
+rightsstatement,rightsstatement,
