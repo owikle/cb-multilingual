@@ -1,35 +1,111 @@
-# collectionbuilder-gh
+# collectionBuilder-multilingual
 
-Testing multilingual capabilities, with options to change the default site language
+[CollectionBuilder-GH](https://github.com/CollectionBuilder/collectionbuilder-gh) template modified to test multilingual capabilities, with options to change the default site language
 
-A project to generate a free and simple digital collection site using [GitHub Pages](https://pages.github.com/) given:
+## Metadata: 
 
-- a CSV of collection metadata
-- a folder of JPEG images or PDF documents
+Metadata must have these field names in order for your collection to work:
 
-Gather your digital objects together and create your metadata using the [CollectionBuilder-GH Metadata Template](https://docs.google.com/spreadsheets/d/1Uv9ytll0hysMOH1j-VL1lZx6PWvc1zf3L35sK_4IuzI/edit?usp=sharing). 
-Then click the green "use this template" button above to create your repository, add your metadata and configure the repository to fit your collection and settings.
+- objectid
+- filename
+- title
+- format
 
-See [Getting Started Docs](https://collectionbuilder.github.io/cb-docs/) for detailed information. 
+See <https://collectionbuilder.github.io/cb-docs/docs/metadata/gh_metadata/> for information about required fields.
 
-View the [demo site](https://collectionbuilder.github.io/collectionbuilder-gh/).
+Create separate columns to hold field values in two languages (each language gets its own column).
+Example:
 
-**Note:** 
-Since `collectionbuilder-gh` uses [GitHub Pages](https://pages.github.com/), it is only suitable for small collections, with lower resolution images. GitHub repositories are limited to 1GB.
+`title`,`title-spa`
 
-## Demo CollectionBuilder with our Workshop Tutorial
+`subject-eng`,`subject-spa`
 
-If you'd like to demo CollectionBuilder, we've made [a step-through tutorial](https://collectionbuilder.github.io/workshop/gh/) using the following spreadsheet and zipped directory. (The tutorial uses items from our [Psychiana Digital Collection](https://www.lib.uidaho.edu/digital/psychiana/), which is worth a visit!)
+With exception of `title` and the other field names listed above, you can title your fields anything you'd like.
 
-Metadata is drawn from the following Google Sheet: 
+## Configure site language:
 
-- [Psychiana Digital Collection Metadata](https://drive.google.com/open?id=1x48Te3duPAxh53foEihQVKTfCKUjaCCbH7TrMMd_yU4)
+In _config.yml, add language ids and display names to `site_languages` section.
+Example:
 
-Objects are collected in this zip file: 
+```
+# set languages used on site
+site_languages: 
+- lang_id: eng
+  lang_display: English
+- lang_id: spa
+  lang_display: Español
+```
 
-- [Psychiana Digital Collection Media Files](https://www.lib.uidaho.edu/collectionbuilder/demo-objects.zip) (Includes image files, pdfs, and mp3s)
+## _data/grand-config-metadata.csv
 
-These files are stored in this [CollectionBuilder-gh Google Drive Folder](https://drive.google.com/drive/folders/1dTO8-3lusaKBdYyauyg_ziVqwLA4Fons?usp=sharing), along with some other metadata sheets and zipped object directories that can be used for other workshops and demonstrations.
+First field name should be `field-id`, followed by `field-` + the language id you specified in the _config.yml file.
+Example:
+
+`field-id,field-eng,field-spa`
+
+Value for `field-id` is a unique identifier that you specify to indicate a single metadata field.
+
+Value for `field-eng` is the field name of the English version of the metadata field (taken from your metadata csv)
+
+Value for `field-spa` is the field name of the Spanish version of the metadata field (taken from your metadata csv)
+
+Currently, every row should have a `field-eng` value.
+Values for `field-spa` are optional.
+
+## _data/config-translation.csv
+
+Use this spreadsheet to translate the site's default language and metadata display names.
+Column titles:
+
+`data_translate,description,eng,spa`
+
+- `data_translate`: a unique value that identifies a specific text on the site. Elsewhere on the site, this value will be entered into a `data-translate` attribute in a span element placed in the location where that text should appear.
+- `description`: a human-readable description of where this text belongs on the site
+- `eng`: the English translation of the text
+- `spa`: the Spanish translation of the text
+
+Example:
+
+```
+data_translate,description,eng,spa
+nav-home,Navigation menu Home option,Home,Inicio
+nav-browse,Navigation menu Browse option,Browse,Búsqueda
+nav-subjects,Navigation menu Subjects option,Subjects,Categorías
+nav-locations,Navigation menu Locations option,Locations,Ubicaciones
+```
+
+## _data/ config csvs
+
+The display_name value in these csvs must be written as an HTML `<span>` element, like so:
+
+`<span data-translate='subject-display-name' class='translate'></span>`
+
+The value of the `data-translate` attribute must be defined in the _data/config-translation.csv for the display name to render correctly.
+
+For example, if I want to add a new metadata field, "Authors" / "Autores", I would first need to add create a field id for it in _data/grand-config-metadata.csv:
+
+```
+field-id,field-eng,field-spa
+authors,authors-eng,authors-spa
+```
+
+Then, I would add the authors field to _data/config-metadata.csv, creating the new `data-translate` value `author-display-name` in the process:
+
+```
+field-id,display_name,browse_link,external_link
+authors,<span data-translate='author-display-name' class='translate'></span>,
+```
+
+Then, I would add the value `author-display-name` to _data/config-translation, accompanied by a description and the display values in each language:
+
+```
+data_translate,description,eng,spa
+author-display-name,display name for author metadata field,Authors,Autores
+```
+
+This process can be followed using the other config- csvs to edit or add metadata field display names anywhere on the site.
+
+---
 
 ## More on CollectionBuilder
 
