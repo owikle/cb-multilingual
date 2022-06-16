@@ -10,10 +10,17 @@
     /* add item data */
     var items = { 
         {%- for item in site.data[site.metadata] -%}
-        {{ item.objectid | jsonify }} : { {% unless fields contains 'title' %}"title": {{ item.title | jsonify }}, {% endunless %}
+        {{ item.objectid | jsonify }} : {
         {%- for f in fields -%}
         {%- assign firstLangField = f[firstLang] -%}
         {%- assign secondLangField = f[secondLang] -%}
+        {% if f.field-id == 'title' %}
+            {%- if item[firstLangField] and item[secondLangField] -%}
+            "title":{{ item[firstLangField] | jsonify }}, {{ secondLangField | jsonify }}:{{ item[secondLangField] | jsonify }},
+            {%- elsif item[firstLangField] and item[secondLangField] == nil -%}
+            "title":{{ item[firstLangField] | jsonify }}
+            {%- endif -%}
+        {% endif %}
         {%- for m in metadata-fields -%}
         {%- if f.field-id == m.field-id -%}
             {%- if item[firstLangField] and item[secondLangField] -%}
@@ -38,8 +45,8 @@
     }
 
     // get first language and second language fields in grand-config-metadata
-    var first_lang = {{ firstLang | jsonify }};
-    var second_lang = {{ secondLang | jsonify }};
+    var first_lang = "{{ firstLang }}";
+    var second_lang = "{{ secondLang }}";
 
     /* get query id from URL */
     var queryString = window.location.search.substring(1).split("=")[1];
@@ -50,10 +57,30 @@
         var itemKeys = Object.keys(items);
         var current = itemKeys.indexOf(queryString);
         var recordName = Object.keys(items)[current];
-        /* add item title */
-        var objectTitle = record.title;
-        document.getElementById("bc-title").innerHTML = '<span data-translate="title-value-' + recordName + '" class="translate"></span>';
-        document.getElementById("item-title").innerHTML = '<span data-translate="title-value-' + recordName + '" class="translate"></span>';
+
+        // get both title fields from grand-config-metadata
+        {%- assign titleField = fields | where_exp: 'f', 'f.field-id == "title"' -%}
+        {%- for f in titleField -%}
+
+        // define second language key
+        var second_lang_field = "{{ f[secondLang] }}";
+
+        // add item title value based on site language
+        var objectTitle = "";
+
+        // check the site language and add the correct title value
+        if (second_lang.includes(current_language)){
+        if(record[second_lang_field]){ objectTitle = record[second_lang_field]; }
+            else if(record["title"]) { objectTitle = record["title"]; }
+        } else if (first_lang.includes(current_language)){
+            if(record["title"]) { objectTitle = record["title"]; }
+        };
+
+        {%- endfor -%}
+
+        document.getElementById("bc-title").innerHTML = objectTitle;
+        document.getElementById("item-title").innerHTML = objectTitle;
+        
         /* add object */ 
         var format = "" + record.format;
         var objectLink = record.filename;
